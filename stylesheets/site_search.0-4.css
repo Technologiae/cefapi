@@ -423,7 +423,7 @@ div.gsc-cursor-box {
 /*	-webkit-box-shadow: 4px 4px 20px #888888;
 	-moz-box-shadow: 4px 10px 10px #c2c2c2;
 	box-shadow: 4px 10px 10px #c2c2c2;*/
-	z-index: 9;
+	z-index: 999999999;
 	border: 1px solid gray;
 	color: black;
 	text-align: left;

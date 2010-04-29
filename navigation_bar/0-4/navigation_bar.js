@@ -171,9 +171,11 @@ var initializeSearch = function(){
 				return false;
 			}
 			
+			window.scrollTo(0,0);
+			
 			$("body").append("<div id='cef_search_floatbox'><img id='google_custom_search_logo_img' src='http://www.google.com/cse/images/google_custom_search_smnar.gif' /><h2 id='cef_search_results_h2'>R&eacute;sultats pour \""+ query +"\"</h2><span class='remove_cef_search_floatbox' id='cef_close_floatbox'>X</span><div id='this_site_search_results'></div><div class='clear'></div><p id='search_explanation'><a href=\"http://recherche.catholique.fr/?q="+ query +"\">Rechercher \""+ query +"\" sur recherche.catholique.fr</a><br /><br />Découvrez le site <a href=\"http://recherche.catholique.fr/?q="+ query +"\">recherche.catholique.fr</a>, pour rechercher sur tous les sites des <strong>dioc&egrave;ses</strong>, des <strong>services nationaux</strong> de la CEF, et sur les sites en <strong>.cef.fr</strong> et en <strong>.catholique.fr</strong></p><p><a href='#' class='remove_cef_search_floatbox'>Fermer cette fen&ecirc;tre</a></p></div>")
 			$("body").append("<div id='cef_search_floatbox_bg'></div>");
-			$("div#cef_search_floatbox_bg").css({position:"fixed",zIndex:8,width:"100%",height:"100%",top:"0px",left:"0px",backgroundColor:"#000",opacity:"0.20"});
+			$("div#cef_search_floatbox_bg").css({position:"fixed",zIndex:999999998,width:"100%",height:"100%",top:"0px",left:"0px",backgroundColor:"#000",opacity:"0.20"});
 			$("div#cef_search_floatbox_bg").click(remove_cef_search_floatbox);
 			$(".remove_cef_search_floatbox").click(remove_cef_search_floatbox);
 			
