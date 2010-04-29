@@ -116,6 +116,7 @@ jQuery.fn.extend({
 	}
 });
 
+
 // Functions utilitaires
 var import_script = function (src){
 	jQuery('head').append('<script src="' + src + '" type="text/javascript"></script>');
@@ -139,7 +140,8 @@ var settings = {
 	share_links: true,
 	add_top_margin: false,
 	google_search_restriction: location.host,
-	cef_root: "#cef-root"
+	cef_root: "#cef-root",
+	scrolling_bar: true
 }
 
 // Si l'élément <div id="cef-root"></div> n'existe pas
@@ -238,6 +240,10 @@ var initializeCefNav = function(){
 	if (settings.add_top_margin) {
 		$("#cef_navigation").css({top:-24}).animate({top:0}, 1000);
 		$("body").animate({"margin-top":24}, 1000);
+	}
+	
+	if (settings.scrolling_bar) {
+		$("#cef_navigation").css({position: "fixed"});
 	}
 		
 	if (settings.site_search) {
