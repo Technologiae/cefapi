@@ -14,12 +14,16 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 from google.appengine.api import memcache
 
+from django.utils.html import escape
+
 NEW_VALUE_WHEN_DEPLOYED = os.environ['CURRENT_VERSION_ID']
 jsm = jsmin.JavascriptMinify()
 
 class NavigationBar(webapp.RequestHandler):
 	def get(self):
 		js_response = memcache.get(NEW_VALUE_WHEN_DEPLOYED + "_js_response")
+		##################
+		# js_response = None
 		if js_response is None:
 			if 'Host' in self.request.headers.keys():
 				host = self.request.headers['Host']
@@ -32,12 +36,20 @@ class NavigationBar(webapp.RequestHandler):
 			f = open(os.path.join(os.path.dirname(__file__), 'nav_links.yaml'))
 			nav_links = yaml.load(f)
 			f.close()
-
+			
+			def html_entities(x): return escape(x).encode("ascii", "xmlcharrefreplace")
+			
+			# Escaping name of links (using html entites)
+			for key, category in nav_links.items():
+				for link in category:
+					link['name'] = html_entities(link['name'])
+			
 			html_template_values = {
 				'nav_links' : nav_links,
 				'host': host
 			}
-
+			
+			# Rendering and escaping html template
 			html_template = template.render(html_template_path, html_template_values).replace('\n', '').replace('\t', '').replace('\"', '\\\"')
 
 			js_template_values = {
@@ -47,11 +59,12 @@ class NavigationBar(webapp.RequestHandler):
 
 			js_response = template.render(js_template_path, js_template_values);
 			
+			# Javascript minified
 			output = StringIO.StringIO()
 			jsm.minify(StringIO.StringIO(js_response), output)
-			
 			js_response = output.getvalue()
 			
+			# Memcache added (will change on next deployment)
 			memcache.add(key=NEW_VALUE_WHEN_DEPLOYED + "_js_response", value=js_response, time=86400)
 		
 		self.response.headers['Content-Type'] = 'text/javascript; charset=UTF-8'
