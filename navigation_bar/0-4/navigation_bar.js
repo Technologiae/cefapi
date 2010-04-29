@@ -138,7 +138,13 @@ var settings = {
 	site_search: true,
 	share_links: true,
 	add_top_margin: false,
-	google_search_restriction: location.host
+	google_search_restriction: location.host,
+	cef_root: "#cef-root"
+}
+
+// Si l'élément <div id="cef-root"></div> n'existe pas
+if (!$(settings.cef_root).length) {
+	settings.cef_root = "body";
 }
 
 // Ajouter les options dans la variable "cef_nav_options", à ajouter dans le code avant ce script.
@@ -219,7 +225,7 @@ var initializeSearch = function(){
 };
 	
 var initializeCefNav = function(){
-	$("body").append("{{navigation_bar_template}}");
+	$(settings.cef_root).append("{{navigation_bar_template}}");
 	
 	import_style("navigation_bar.0-4.css");
 	
@@ -244,7 +250,12 @@ var initializeCefNav = function(){
 	
 }
 
-// L'initialisation a lieu une fois la page HTML chargée:
-$(initializeCefNav);
+if (settings.cef_root == "body") {
+	// L'initialisation a lieu une fois la page HTML chargée:
+	$(initializeCefNav);
+}else{
+	// L'initialisation a lieu immédiatement
+	initializeCefNav();
+}
 	
 })(jQuery);
