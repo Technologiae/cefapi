@@ -22,7 +22,7 @@
 	background-color: white;
 	border-bottom: 1px solid #f2f2f2;
 	height: 23px;
-	display: block;
+	display: block !important;
 	right: 0;
 	text-align: left;
 	z-index: 999999;

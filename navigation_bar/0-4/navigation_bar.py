@@ -21,14 +21,15 @@ jsm = jsmin.JavascriptMinify()
 
 class NavigationBar(webapp.RequestHandler):
 	def get(self):
+		if 'Host' in self.request.headers.keys():
+			host = self.request.headers['Host']
+		else:
+			raise NameError('MissingHost')
+		
 		js_response = memcache.get(NEW_VALUE_WHEN_DEPLOYED + "_js_response")
-		##################
-		# js_response = None
+		if host == "localhost:8080": js_response = None
+		
 		if js_response is None:
-			if 'Host' in self.request.headers.keys():
-				host = self.request.headers['Host']
-			else:
-				raise NameError('MissingHost')
 
 			js_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.js')
 			html_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.html')

@@ -139,6 +139,7 @@ var settings = {
 	site_search: true,
 	share_links: true,
 	add_top_margin: false,
+	with_animation: true,
 	google_search_restriction: location.host,
 	cef_root: "#cef-root",
 	scrolling_bar: true
@@ -240,8 +241,13 @@ var initializeCefNav = function(){
 	}
 	
 	if (settings.add_top_margin) {
-		$("#cef_navigation").css({top:-24}).animate({top:0}, 1000);
-		$("body").animate({"margin-top":24}, 1000);
+		if (settings.with_animation) {
+			$("#cef_navigation").css({top:-24}).animate({top:0}, 500);
+			$("body").animate({"margin-top":24}, 500);
+		}else{
+			$("body").css({"margin-top":24});
+		}
+		
 	}
 	
 	if (settings.scrolling_bar) {
