@@ -69,6 +69,8 @@ class NavigationBar(webapp.RequestHandler):
 			memcache.add(key=NEW_VALUE_WHEN_DEPLOYED + "_js_response", value=js_response, time=86400)
 		
 		self.response.headers['Content-Type'] = 'text/javascript; charset=UTF-8'
+		self.response.headers['Cache-Control'] = 'private, max-age=3600, must-revalidate'
+		
 		self.response.out.write(js_response)		
 
 application = webapp.WSGIApplication(
