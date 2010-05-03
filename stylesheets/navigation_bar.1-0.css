@@ -1,0 +1,185 @@
+/* @override 
+	http://localhost:8080/stylesheets/navigation_bar.0-4.css
+	http://recherche.catholique.fr/stylesheets/navigation_bar.0-4.css
+	http://0-4-7.latest.catholiquefr.appspot.com/stylesheets/navigation_bar.0-4.css
+*/
+
+/* Reset div */
+
+#cef_navigation div, #cef_navigation form {
+	margin: 0;
+	padding: 0;
+}
+
+#cef_navigation {
+	font: 14px Calibri, "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: white;
+	border-bottom: 1px solid #f2f2f2;
+	height: 23px;
+	display: block !important;
+	right: 0;
+	text-align: left;
+	z-index: 999999;
+	-webkit-box-shadow: 0px 0px 6px rgba(1,1,1,0.5);
+	-moz-box-shadow: 0px 0px 6px rgba(1,1,1,0.5);
+	box-shadow: 0px 0px 6px rgba(1,1,1,0.5);
+}
+
+#cef_navigation a img {
+	border-style: none;
+	border-width: 0;
+}
+
+#cef_navigation #cef_navigation_links_left {
+	color: #f2f2f2;
+	display: block;
+	margin-top: 4px;
+	background: url(../img/logopetit.catholique.png) no-repeat;
+	margin-left: 5px;
+	padding-left: 23px;
+}
+
+#cef_navigation #cef_navigation_links_right {
+	float: right;
+	margin-top: 4px;
+	display: block;
+	margin-right: 4px;
+}
+
+#cef_navigation #cef_navigation_links_right a {
+	vertical-align: -3px;
+}
+
+#cef_navigation .cef_navigation_links a {
+	color: #004e94;
+	text-decoration: none;
+	font-weight: normal;
+	font-style: normal;
+}
+
+#cef_navigation .cef_navigation_links a small {
+	font-size: 10px;
+	color: #004e94;
+}
+
+#cef_navigation .cef_navigation_links a:hover {
+	color: #004e94;
+	text-decoration: underline;
+}
+
+#cef_navigation .cef_navigation_links a.active {
+	color: black;
+	cursor: default;
+	font-weight: bold;
+}
+
+#cef_navigation .cef_navigation_links a.active:hover {
+	text-decoration: none;
+}
+
+#cef_navigation #site_search_form {
+	display: block;
+	float: right;
+	margin-top: 2px;
+	margin-right: 60px;
+}
+
+#site_search_form.cef_navigation_links a {
+	vertical-align: -2px;
+}
+
+#site_search_form input#site_search {
+	border: 1px solid #b2b2b2;
+	padding: 0;
+	margin: 0;
+	height: 14px;
+	width: 150px;
+}
+
+#site_search_form input#site_search_submit {
+	padding: 0;
+	margin: 0;
+	height: 14px;
+	width: 14px;
+	border-style: none;
+	background: url(../img/icone_recherche.png) no-repeat;
+}
+
+#site_search_form input#site_search_submit:hover {
+	opacity: 0.45;
+}
+
+
+/* Menu déroulant */
+
+
+
+#cef_navigation .cef_nav_menu {
+	display: none;
+	position: absolute;
+	top: 23px;
+	background-color: white;
+	width: 390px;
+	-webkit-box-shadow: 4px 6px 9px rgba(1,1,1,0.3);
+	-moz-box-shadow: 4px 6px 9px rgba(1,1,1,0.3);
+	box-shadow: 4px 6px 9px rgba(1,1,1,0.3);
+	color: gray;
+	padding: 7px 0;
+	border: 1px solid #f2f2f2;
+	z-index: 9999999;
+}
+
+#cef_navigation .cef_nav_menu.cef_nav_menu_small {
+	width: 210px;
+}
+
+#cef_navigation .cef_nav_menu h3 {
+	padding: 0;
+	margin-bottom: 5px;
+	margin-top: 0;
+	text-decoration: none;
+	font: normal normal bold 14px Arial, sans-serif;
+	color: #797979;
+}
+
+#cef_navigation .cef_nav_menu ul {
+	margin: 0 0 10px;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+	list-style-position: inside;
+	list-style-type: disc;
+}
+
+#cef_navigation .cef_nav_menu div {
+	width: 180px;
+	display: block;
+	float: left;
+	margin-left: 10px;
+}
+
+.cef_nav_menu div.clear {
+	float: none;
+	clear: both;
+	display: block;
+}
+
+div.cef_nav_menu input[type='text'] {
+	width: 110px;
+	margin-right: 5px;
+}
+
+#cef_navigation_links_left div.cef_nav_menu div ul form input[type=text] {
+	border: 1px inset #b2b2b2;
+}

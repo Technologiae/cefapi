@@ -1,12 +1,14 @@
 # Reference: http://code.google.com/intl/fr-FR/appengine/docs/python/config/appconfig.html
 application: catholiquefr
-version: 0-4-7
+version: 1-0
 runtime: python
 api_version: 1
 
 handlers:
 - url: /
   script: recherche/recherche.py
+- url: /api/navigation_bar.1-0.js
+  script: navigation_bar/1-0/navigation_bar.py
 - url: /api/navigation_bar.0-4.js
   script: navigation_bar/0-4/navigation_bar.py
 - url: /stylesheets

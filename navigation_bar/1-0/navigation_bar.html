@@ -1,0 +1,108 @@
+{% spaceless %}
+<div id='cef_navigation' style="display: none;">
+
+	<div id='cef_navigation_links_right' class='cef_navigation_links'>
+		Partager&nbsp;: <a id="facebook_share_link" href="#"><img src="http://{{host}}/img/FaceBook-icon.png" width="16" height="16" alt="Partager sur facebook"></a>
+		<a id="twitter_share_link"  href="#"><img src="http://{{host}}/img/Twitter-icon.png" width="16" height="16" alt="Partager sur Twitter"></a>
+	</div>
+	<script type="text/javascript" charset="utf-8">
+		jQuery("#facebook_share_link").attr("href", "http://www.facebook.com/share.php?u="+location.href);
+		jQuery("#twitter_share_link").attr("href", "http://twitter.com/home?status="+location.href);
+	</script>
+	
+	<div id='site_search_form' class='cef_navigation_links'>
+		<form action='http://recherche.catholique.fr' method='get' accept-charset='utf-8' name='cef_search' id='cef_search'>
+		<input type='text' name='q' value='' id='site_search' />
+		<input type='submit' id='site_search_submit' value='&nbsp;' />
+		</form>
+	</div>
+	
+	<div id='cef_navigation_links_left' class='cef_navigation_links'>
+		<a href='#'>eglise.catholique.fr <small>&#x25BC;</small></a>
+		<div class='cef_nav_menu '>
+			<div>
+				<a href="http://www.eglise.catholique.fr/">Page d&#x27;accueil</a><br><br>
+				<h3>Rubriques</h3>
+				<ul>{% for link in nav_links.catholiquefr %}
+					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+				{% endfor %}</ul>
+			</div>
+			<div>
+				<h3>Dossiers d&#x27;actualit&eacute;s</h3>
+				<ul>{% for link in nav_links.catholiquefr_actu %}
+					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+				{% endfor %}</ul>
+			</div>
+			<div class='clear'></div>
+		</div>
+		 | 
+		<a href='#'>dioc&egrave;ses <small>&#x25BC;</small></a>
+		<div class='cef_nav_menu cef_nav_menu_small'>
+			<div>
+				<ul>{% for link in nav_links.dioceses %}
+					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+				{% endfor %}</ul>
+				<h3>Recherche</h3>
+				<ul>
+					<form action="http://recherche.catholique.fr" method="get" accept-charset="utf-8">
+						dans les sites des diocèses:
+						<input type="text" name="q"><input  type="submit" value="&rarr;">
+						<input type="hidden" name="sites" value="dioc&egrave;ses">
+					</form>
+				</ul>
+			</div>
+			<div class='clear'></div>
+		</div>
+		 | 
+		<a href='#'>ressources <small>&#x25BC;</small></a>
+		<div class='cef_nav_menu'>
+			<div>
+				<h3>Liturgie</h3>
+				<ul>{% for link in nav_links.liturgie %}
+					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+				{% endfor %}</ul>
+				<h3>Messes</h3>
+				<ul>{% for link in nav_links.messes %}
+					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+				{% endfor %}</ul>
+			</div>
+			<div>
+				<h3>Recherche avanc&eacute;e</h3>
+				<ul>
+					<form action="http://recherche.catholique.fr" method="get" accept-charset="utf-8">
+						Sites de l'Église Catholique
+						<input type="text" name="q"><input  type="submit" value="&rarr;">
+						<input type="hidden" name="sites" value="tous">
+					</form>
+				</ul>
+				<h3>Annuaire des sites</h3>
+				<ul>{% for link in nav_links.annuaire_des_sites %}
+					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+				{% endfor %}</ul>
+			</div>
+			<div class='clear'></div>
+		</div>
+		 | 
+		<a id='cef_menu_sites_link' href='#'>acc&egrave;s direct sites <small>&#x25BC;</small></a>
+		<div class='cef_nav_menu' id='cef_menu_sites'>
+			<div>
+				<h3>Conf&eacute;rence des &eacute;v&ecirc;ques</h3>
+				<ul>{% for link in nav_links.cef %}
+					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+				{% endfor %}</ul>
+			</div>
+			<div>
+				<h3>&Eacute;glise universelle</h3>
+				<ul>{% for link in nav_links.eglise_universelle %}
+					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+				{% endfor %}</ul>
+				<h3>Autres</h3>
+				<ul>{% for link in nav_links.conferences %}
+					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+				{% endfor %}</ul>
+			</div>
+			<div class='clear'></div>
+		</div>
+	</div>			
+</div>
+{% endspaceless %}

@@ -1,0 +1,133 @@
+cef:
+- url: http://www.eglise.catholique.fr
+  name: "Église catholique en France"
+- url: http://www.penseesociale.catholique.fr
+  name: "Pensée sociale de l'Église"
+- url: http://www.liturgiecatholique.fr
+  name: Liturgie Catholique
+- url: http://sncc.cef.fr/
+  name: "Catéchèse et catéchuménat"
+- url: http://enseignement-catholique.fr/
+  name: Enseignement Catholique
+- url: http://aumoneries-francophones.cef.fr/
+  name: "Français à l'étranger"
+- url: http://www.inxl6.org/
+  name: Jeunes
+- url: http://www.eglisemigrations.org
+  name: Migrants
+- url: http://mission.cef.fr/
+  name: "Œuvres pontif. missionnaires"
+- url: http://www.eglise.catholique.fr/conference-des-eveques-de-france/organisation/services-nationaux/unite-des-chretiens/
+  name: "Unité des chrétiens"
+- url: http://www.eglise.catholique.fr/eglise-et-societe/relations-avec-le-judaisme/
+  name: "Relations avec le judaïsme"
+- url: http://www.le-sri.com/
+  name: "Relations avec l’Islam"
+- url: http://vocations.cef.fr/
+  name: Vocations
+- url: http://nouvellescroyances-derivessectaires.cef.fr/
+  name: Sectes et nouvelles croyances
+- url: http://www.bioethique.catholique.fr/
+  name: Blog Bioéthique
+- url: http://www.denier.catholique.fr/
+  name: Le denier
+
+eglise_universelle:
+- url: http://www.vatican.va/phome_fr.htm
+  name: Vatican.va
+- url: http://www.vatican.va/archive/FRA0013/_INDEX.HTM
+  name: "Catéchisme de l'Église Cath."
+- url: http://www.vatican.va/holy_father/benedict_xvi/index_fr.htm
+  name: "Textes de Benoît XVI"
+  
+conferences:
+- url: http://www.comece.org/
+  name: COMECE
+- url: http://www.corref.fr/
+  name: CORREF
+- url: http://instituts-seculiers.cef.fr/cnisf/
+  name: CNISF
+- url: http://www.eglise.catholique.fr/ressources-annuaires/guide-de-leglise/mouvements-et-associations/mouvements-et-associations.html
+  name: Mouvements et associations
+    
+annuaire_des_sites:
+- url: http://www.eglise.catholique.fr/ressources-annuaires/sites-et-liens/liens.html?categorieID=23
+  name: "Sites internet des diocèses"
+- url: http://www.eglise.catholique.fr/ressources-annuaires/sites-et-liens/liens.html?categorieID=2
+  name: Mouvements et associations
+- url: http://www.eglise.catholique.fr/ressources-annuaires/sites-et-liens/liens.html?categorieID=14
+  name: Autres mouv. et assoc.
+- url: http://www.corref.fr/
+  name: Religieux et Religieuses
+- url: http://www.eglise.catholique.fr/tisserands/liste-des-sites-en-.catholique.fr.html
+  name: Domaine .catholique.fr
+#- url: 
+#  name: Domaine cef.fr
+  
+liturgie:
+- url: http://aelf.org/
+  name: Lectures du dimanche
+- url: http://aelf.org/office-messe
+  name: Lectures du jour
+- url: http://www.eglise.catholique.fr/actualites-et-evenements/agenda/saint-du-jour.html
+  name: Saint du jour
+- url: http://www.eglise.catholique.fr/foi-et-vie-chretienne/commentaires-de-marie-noelle-thabut.html
+  name: Commentaires lectures
+- url: http://aelf.org/office-laudes
+  name: Liturgie des heures
+- url: http://www.liturgiecatholique.fr/-Calendriers-.html
+  name: Calendrier liturgique
+  
+messes:
+- url: http://messesinfo.catholique.fr/
+  name: MessesInfo
+- url: http://messesinfo.catholique.fr/
+  name: Horaires de messes
+- url: http://messesinfo.catholique.fr/include_page/annuaire_lieu_de_culte.php
+  name: Annuaire des lieux de culte
+- url: http://www.android.catholique.fr/
+  name: Versions mobiles
+
+catholiquefr:
+- url: http://www.eglise.catholique.fr/foi-et-vie-chretienne/foi-et-vie-chretienne.html
+  name: "Foi et vie chrétienne"
+- url: http://www.eglise.catholique.fr/eglise-et-societe/eglise-et-societe.html
+  name: "Église et société"
+- url: http://www.eglise.catholique.fr/actualites-et-evenements/actualites.html
+  name: "Actualités"
+- url: http://www.eglise.catholique.fr/actualites-et-evenements/agenda/agenda.html
+  name: Agenda
+- url: http://www.eglise.catholique.fr/ressources-annuaires/guide-de-leglise/guide-de-leglise.html
+  name: "Guide de l'Église"
+- url: http://www.eglise.catholique.fr/conference-des-eveques-de-france/
+  name: "Conf. des évêques de France"
+- url: http://www.eglise.catholique.fr/actualites-et-evenements/lettre-dinformation/abonnement-newsletter.html
+  name: "Lettre d'information"
+- url: http://www.eglise.catholique.fr/actualites-et-evenements/flux-rss/les-flux-rss-du-site-www.eglise.catholique.fr.html
+  name: Flux RSS
+
+catholiquefr_actu:
+- url: http://www.eglise.catholique.fr/actualites-et-evenements/assemblee-pleiniere-de-mars-2010/assemblee-pleniere-de-mars-2010.html
+  name: "Assemblée plénière"
+- url: http://www.bioethique.catholique.fr/
+  name: Blog Bioéthique
+- url: http://www.eglise.catholique.fr/jean-paul-ii/
+  name: Jean-Paul II
+- url: http://www.eglise.catholique.fr/eglise-et-societe/lutter-contre-la-pedophilie/lutter-contre-la-pedophilie.html
+  name: "Lutter contre la pédophilie"
+- url: http://www.eglise.catholique.fr/eglise-et-societe/politique/elections-regionales-2010/elections-regionales-en-2010.html
+  name: "Elections régionales"
+- url: http://www.eglise.catholique.fr/actualites-et-evenements/dossiers/seisme-en-haiti/seisme-en-haiti.html
+  name: "Séisme en Haïti"
+- url: http://www.eglise.catholique.fr/actualites-et-evenements/dossiers/avance-au-large-2010/avance-au-large-2010.html
+  name: Avance au large 2010
+
+dioceses:
+- url: http://www.eglise.catholique.fr/ressources-annuaires/guide-de-leglise/dioceses-et-paroisses/carte-des-dioceses.html
+  name: "Coordonnées des diocèses"
+- url: http://www.eglise.catholique.fr/ressources-annuaires/guide-de-leglise/dioceses-et-paroisses/carte-des-dioceses.html
+  name: "Carte des diocèses"
+- url: http://www.eglise.catholique.fr/ressources-annuaires/sites-et-liens/liens.html?categorieID=23
+  name: "Sites web des diocèses"
+- url: http://www.eglise.catholique.fr/conference-des-eveques-de-france/eveques/liste-des-eveques.html
+  name: "Liste des évêques"

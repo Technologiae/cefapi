@@ -1,0 +1,462 @@
+/* @override 
+	http://localhost:8080/stylesheets/site_search.0-4.css
+	http://recherche.catholique.fr/stylesheets/site_search.0-4.css
+*/
+
+.gsc-control {
+	font: 14px;
+	
+}
+
+.gsc-resultsRoot-siteSearch .gsc-title {
+	font-weight: bold;
+}
+
+.gsc-search-box {
+	display: none;
+}
+
+.gsc-twiddleRegionCell {
+	display: none;
+}
+
+a.gsc-trailing-more-results,
+		.gsc-results .gsc-trailing-more-results,
+		.gsc-results .gsc-trailing-more-results * {
+	padding: 1px;
+	color: #c00 !important;
+	text-decoration: none !important;
+}
+
+.gsc-branding-text, .gsc-branding-img {
+	display: none !important;
+}
+
+.gsc-control-cse {
+}
+
+input.gsc-input {
+	border-color: #BCCDF0;
+}
+
+input.gsc-search-button {
+	border-color: #336699;
+	background-color: #E9E9E9;
+}
+
+.gsc-tabHeader.gsc-tabhInactive {
+	border-color: #E9E9E9;
+	background-color: #EEEEEE;
+}
+
+.gsc-tabHeader.gsc-tabhActive {
+	border-top-color: #333333;
+	border-left-color: #E9E9E9;
+	border-right-color: #E9E9E9;
+	background-color: #FFFFFF;
+}
+
+.gsc-webResult.gsc-result {
+	padding-bottom: 15px;
+}
+
+div.gs-watermark {
+	display: none;
+}
+
+.gsc-webResult.gsc-result:hover {
+	border-color: #FFFFFF;
+}
+
+.gs-webResult.gs-result a.gs-title {
+	color: #486FAA;
+	font-size: 14px;
+	text-decoration: underline;
+}
+
+.gs-webResult.gs-result a.gs-title:hover {
+	color: #486FAA;
+}
+
+.gs-webResult.gs-result a.gs-title:visited {
+	color: #612461;
+}
+
+.gsc-cursor-page {
+	color: #486FAA;
+}
+
+a.gsc-trailing-more-results:link {
+	color: #486FAA;
+}
+
+.gs-webResult.gs-result .gs-snippet {
+	color: #000000;
+	margin-top: 1px;
+	font-size: 14px;
+}
+
+.gs-webResult.gs-result .gs-visibleUrl {
+	color: #ab8e72;
+	font-size: 13px;
+	margin-top: 0px;
+	display: block;
+}
+
+.gs-webResult.gs-result .gs-visibleUrl-short {
+	color: #996633;
+	display: none;
+}
+
+.gsc-cursor-page {
+	border-color: #ccc;
+	border-style: solid;
+	border-width: 1px 1px 1px 0;
+	float: left;
+	height: 28px;
+	line-height: 28px;
+	padding: 0 10px;
+	margin-right: 0 !important;
+	font-size: 1.2em;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none !important;
+	color: #486FAA !important;
+}
+
+div.gsc-cursor-page:hover {
+	background: #486FAA;
+	color: #fff !important;
+}
+
+.gsc-cursor-current-page {
+	background: #486FAA;
+	color: #fff !important;
+}
+
+
+/* News results */
+
+div.gs-newsResult.gs-result {
+	margin-bottom: 10px;
+}
+
+.gs-result .gs-title,
+.gs-result .gs-title * {
+	display: inline;
+}
+
+.gs-divider {
+  padding-bottom: 8px;
+  text-align: center;
+  color: #676767;
+}
+
+.gs-result a.gs-visibleUrl,
+.gs-result .gs-visibleUrl {
+  color: #963;
+  text-decoration: none;
+	display: none;
+}
+
+/* relative and absolute dates, note, news/books inlines these */
+.gs-relativePublishedDate,
+.gs-publishedDate {
+  color: #6f6f6f;
+  text-decoration: none;
+}
+
+.gs-result a.gs-clusterUrl,
+.gs-result .gs-clusterUrl {
+  color: #963;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.gs-newsResult .gs-publisher {
+  color: #6f6f6f;
+  display : none;
+  text-decoration: none;
+}
+
+/*
+ * For news results there are two dates...
+ * The relative date is visible while in the
+ * search control and the published date
+ * is visible when clipped. Why? It doesn't
+ * make sense to say 4 hours ago for a clipped
+ * result...
+ */
+
+/* establish the base style */
+.gs-newsResult .gs-relativePublishedDate,
+.gs-newsResult .gs-publishedDate {
+  display : inline;
+  margin-left : 4px;
+}
+
+/* base styling for relative date is none */
+.gs-blogResult .gs-relativePublishedDate,
+.gs-newsResult .gs-relativePublishedDate {
+  display : none;
+}
+
+/* suppress publishedDate while in the control */
+.gsc-blogResult .gs-blogResult .gs-publishedDate,
+.gsc-newsResult .gs-newsResult .gs-publishedDate {
+  display : none;
+}
+
+/* enable relativePublishedDate while in the control */
+.gsc-blogResult .gs-blogResult .gs-relativePublishedDate,
+.gsc-newsResult .gs-newsResult .gs-relativePublishedDate {
+  display : inline;
+}
+
+.gs-newsResult .gs-location {
+  color: #6f6f6f;
+  display : inline;
+  text-decoration: none;
+}
+
+.gs-promotion {
+  padding-top : 5px;
+}
+
+.gs-promotion a {
+  font-weight : bold;
+  font-size: 14px;
+}
+
+.gs-promotion-image {
+  margin-right : 10px;
+}
+
+.gs-promotion-image-td {
+  vertical-align : top;
+}
+
+.gs-promotion table {
+  border : none;
+  border-style : none;
+  border-width : 0px;
+  border-spacing : 0px 0px;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
+.gs-promotion table a {
+  font-weight : normal;
+  font-size: 13px;
+  padding-right : 5px;
+}
+
+.gs-result img.gs-image {
+  vertical-align : middle;
+  border : 1px solid #486faa;
+}
+
+.gs-result div.gs-phone {}
+
+.gs-result .gs-directions,
+.gs-result .gs-directions * {
+  color: #7777cc;
+  font-weight: normal;
+  text-decoration : underline;
+  cursor : pointer;
+}
+
+.gs-secondary-link,
+.gs-secondary-link * {
+  color: #7777cc;
+  font-weight: normal;
+  text-decoration : underline;
+  cursor : pointer;
+}
+
+/* Image Search
+ */
+ 
+.gsc-imageResult {
+  float: left;
+  margin-bottom: 1em;
+  margin-right: 20px;
+	display: block;
+}
+
+.gs-imageResult {
+  width: 114px; /* default width + 1px border */
+  overflow : hidden;
+}
+
+.gs-imageResult .gs-image-box {
+  height: 86px; /* default height + 1px border */
+  position : relative;
+}
+
+/* note, left edge is auto-set by search control */
+.gs-imageResult .gs-image-box img.gs-image {
+  position : absolute;
+  bottom : 0px;
+}
+
+.gs-imageResult .gs-text-box {
+  text-align: center;
+  overflow : hidden;
+  height: 4em;
+}
+
+.gs-imageResult .gs-snippet {
+  overflow : hidden;
+  line-height: 1em;
+  cursor : pointer;
+  white-space : nowrap;
+}
+.gs-imageResult .gs-visibleUrl {
+  cursor : pointer;
+  overflow : hidden;
+  line-height: 1.3em;
+  height: 1.3em;
+}
+.gs-imageResult .gs-size {
+  color: #6f6f6f;
+}
+
+/* Tabs */
+
+/* tabbed mode of search control
+ * .gsc-tabsArea : the box containing all of the tabs
+ * .gsc-tabsAreaInvisible : same as above, but this is the state when search has been cleared
+ * .gsc-tabHeader : an individual tab
+ * .gsc-tabHeader.gsc-tabhActive : the active tab
+ * .gsc-tabHeader.gsc-tabhInactive : an inactive tab
+ * .gsc-tabData : the data area/box containg results and header data for each tab
+ * .gsc-tabData.gsc-tabdActive : the data area for the active tab
+ * .gsc-tabData.gsc-tabdInactive : the data area for inactive tabs
+ */
+.gsc-tabsArea {
+  clear: both;
+  margin-top: 6px;
+	border-bottom: 1px solid #c9c9c9;
+	margin-bottom: 10px;
+}
+
+.gsc-tabsArea .gs-spacer {
+  font-size : 1px;
+  margin-right : 0px;
+  overflow : hidden;
+}
+
+.gsc-tabsArea .gs-spacer-opera {
+  margin-right : 0px;
+}
+
+.gsc-tabsAreaInvisible {
+  display : none;
+  }
+
+.gsc-tabHeader {
+  display: inline;
+  cursor: pointer;
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-right: 2px;
+  }
+
+.gsc-tabHeader.gsc-tabhActive {
+  border-left: 1px solid #e9e9e9;
+  border-right: 1px solid #e9e9e9;
+  border-top: 2px solid #ff9900;
+  color: black;
+  }
+
+.gsc-tabHeader.gsc-tabhInactive {
+  border-left: 1px solid #e9e9e9;
+  border-right: 1px solid #e9e9e9;
+  border-top: 2px solid #e9e9e9;
+  background: #e9e9e9;
+  color: #676767;
+  }
+
+.gsc-tabData.gsc-tabdActive {
+  display: block;
+}
+
+.gsc-tabData.gsc-tabdInactive {
+  display: none;
+  }
+
+/* tab specific results header supression
+ * - no twiddle, tabbed mode runs in full expand mode
+ * - no title
+ * - no stats
+ */
+.gsc-tabData .gsc-resultsHeader .gsc-title {
+  display: none;
+  }
+
+.gsc-tabData .gsc-resultsHeader .gsc-stats {
+  display: none;
+  }
+
+.gsc-tabData .gsc-resultsHeader .gsc-results-selector {
+  display : none;
+}
+
+div.gsc-cursor-box {
+	clear: left;
+}
+
+/* Float box */
+
+
+
+#cef_search_floatbox {
+	font: 14px Calibri, "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	position: absolute;
+	display: block;
+	top: 80px;
+	width: 60%;
+	background-color: white;
+	left: 20%;
+	padding: 15px;
+/*	-webkit-box-shadow: 4px 4px 20px #888888;
+	-moz-box-shadow: 4px 10px 10px #c2c2c2;
+	box-shadow: 4px 10px 10px #c2c2c2;*/
+	z-index: 999999999;
+	border: 1px solid gray;
+	color: black;
+	text-align: left;
+}
+
+#google_custom_search_logo_img {
+	float: right;
+}
+
+#cef_close_floatbox {
+	float: right;
+}
+
+#cef_close_floatbox:hover {
+	opacity: 0.5;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#search_explanation {
+	padding-bottom: 10px;
+}
+
+div.clear {
+	clear: both;
+}
+
+#cef_search_floatbox h2 {
+	margin-top: 0px;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+#cef_search_floatbox p {
+	margin-top: 10px;
+}
