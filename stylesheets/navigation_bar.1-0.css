@@ -183,3 +183,9 @@ div.cef_nav_menu input[type='text'] {
 #cef_navigation_links_left div.cef_nav_menu div ul form input[type=text] {
 	border: 1px inset #b2b2b2;
 }
+
+@media print {
+    #cef_navigation {
+		display: none !important;
+	}
+}

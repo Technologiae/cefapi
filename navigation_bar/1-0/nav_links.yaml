@@ -107,10 +107,12 @@ catholiquefr:
   name: Flux RSS
 
 catholiquefr_actu:
+- url: http://www.eglise.catholique.fr/actualites-et-evenements/dossiers/44eme-journee-mondiale-des-communications-sociales/44eme-journee-mondiale-des-communications-sociales.html
+  name: "44ème Journée mondiale des Communications sociales"
+- url: http://www.eglise.catholique.fr/actualites-et-evenements/dossiers/annee-sacerdotale/2009-2010-une-annee-sacerdotale.html
+  name: "Année sacerdotale"
 - url: http://www.eglise.catholique.fr/actualites-et-evenements/assemblee-pleiniere-de-mars-2010/assemblee-pleniere-de-mars-2010.html
   name: "Assemblée plénière"
-- url: http://www.bioethique.catholique.fr/
-  name: Blog Bioéthique
 - url: http://www.eglise.catholique.fr/jean-paul-ii/
   name: Jean-Paul II
 - url: http://www.eglise.catholique.fr/eglise-et-societe/lutter-contre-la-pedophilie/lutter-contre-la-pedophilie.html

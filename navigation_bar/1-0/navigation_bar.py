@@ -19,6 +19,12 @@ from django.utils.html import escape
 NEW_VALUE_WHEN_DEPLOYED = os.environ['CURRENT_VERSION_ID']
 jsm = jsmin.JavascriptMinify()
 
+# class NewsLink(db.Model):
+#     name = db.StringProperty(required=True)
+# 	link = db.LinkProperty()
+#     date = db.DateProperty()
+#     active = db.BooleanProperty()
+
 class NavigationBar(webapp.RequestHandler):
 	def get(self):
 		if 'Host' in self.request.headers.keys():
@@ -74,7 +80,7 @@ class NavigationBar(webapp.RequestHandler):
 		self.response.out.write(js_response)		
 
 application = webapp.WSGIApplication(
-									 [('/api/navigation_bar.1-0.js', NavigationBar)],
+									 [('/api/cef.js', NavigationBar)],
 									 debug=True)
 
 def main():

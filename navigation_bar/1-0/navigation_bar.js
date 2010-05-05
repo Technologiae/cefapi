@@ -117,16 +117,6 @@ jQuery.fn.extend({
 });
 
 
-// Functions utilitaires
-var import_script = function (src){
-	jQuery('head').append('<script src="' + src + '" type="text/javascript"></script>');
-}
-
-var import_style = function (src){
-	jQuery('head').append('<link rel="stylesheet" href="http://' + api_host + '/stylesheets/' + src + '" type="text/css" media="all" />');
-}
-
-
 // CEF navigation bar
 // © Pierre-Marie Lévêque
 // L'affichage des résultats doit respecter les règles de Google:
@@ -134,34 +124,26 @@ var import_style = function (src){
 // http://www.google.com/cse/docs/branding.html
 
 var api_host = "{{host}}";
+window.CEF = {};
 
-var settings = {
+CEF.settings = {
 	site_search: true,
 	share_links: true,
 	add_top_margin: false,
 	with_animation: true,
 	google_search_restriction: location.host,
-	cef_root: "#cef-root",
 	scrolling_bar: true
 }
 
-// Si l'élément <div id="cef-root"></div> n'existe pas
-if (!$(settings.cef_root).length) {
-	settings.cef_root = "body";
-}
+CEF.navigationBarHtml = "{{navigation_bar_template}}";
 
-// Ajouter les options dans la variable "cef_nav_options", à ajouter dans le code avant ce script.
-if (typeof(cef_nav_options) != 'undefined'){
-	$.extend(settings, cef_nav_options);
-}
-
-// On désactive la recherche intégrée si l'API google n'a pas été initialisée
-if (typeof(google) == 'undefined'){
-	$.extend(settings, {site_search: false});
+// Function utilitaire
+CEF.import_style = function (src){
+	jQuery('head').append('<link rel="stylesheet" href="http://' + api_host + '/stylesheets/' + src + '" type="text/css" media="all" />');
 }
 
 // Fonction d'initialisation de la recherche
-var initializeSearch = function(){
+CEF.initializeSearch = function(){
 	try {			
 		$("#cef_search").submit(function(){
 			var query = $("#site_search").attr("value");
@@ -190,9 +172,9 @@ var initializeSearch = function(){
 
 			// Web Search
 			var webSearch = new google.search.WebSearch();
-			webSearch.setUserDefinedLabel("Pages de " + settings.google_search_restriction);
+			webSearch.setUserDefinedLabel("Pages de " + CEF.settings.google_search_restriction);
 			//FIXME
-			webSearch.setSiteRestriction(settings.google_search_restriction);
+			webSearch.setSiteRestriction(CEF.settings.google_search_restriction);
 
 			// News search
 			var newsSearch = new google.search.NewsSearch();
@@ -201,7 +183,7 @@ var initializeSearch = function(){
 			// Image Search
 			var imageSearch = new google.search.ImageSearch();
 			imageSearch.setUserDefinedLabel("Images");
-			imageSearch.setSiteRestriction(settings.google_search_restriction);
+			imageSearch.setSiteRestriction(CEF.settings.google_search_restriction);
 
 			// Create 3 searchers and add them to the control
 			thisSiteSearchControl.addSearcher(webSearch);
@@ -219,7 +201,7 @@ var initializeSearch = function(){
 				thisSiteSearchControl.execute(query);
 				// Google Analytics tracking
 				if(typeof(pageTracker)!='undefined'){
-					pageTracker._trackPageview('/search?kind=site_search&q=' + query);
+					pageTracker._trackPageview('/?search_query=' + query);
 				}
 			}
 
@@ -229,34 +211,51 @@ var initializeSearch = function(){
 	}catch(err){}
 };
 	
-var initializeCefNav = function(){
-	$(settings.cef_root).append("{{navigation_bar_template}}");
+CEF.initNavigationBar = function(options){
+	// Les options par défaut sont configurées dans la variable CEF.settings
+	if (typeof(options) != 'undefined'){
+		$.extend(CEF.settings, options);
+	}
+
+	// On désactive la recherche intégrée si l'API google n'a pas été initialisée
+	if (typeof(google) == 'undefined'){
+		$.extend(CEF.settings, {site_search: false});
+	}
 	
-	import_style("navigation_bar.1-0.css");
+	// On ajoute le code HTML de la barre de navigation à l'élément #cef-root
+	$("#cef-root").append(CEF.navigationBarHtml);
 	
+	// On importe la feuille de style
+	// La barre de navigation ne s'affiche qu'une fois cette feuille de style chargée.
+	CEF.import_style("navigation_bar.1-0.css");
+	
+	// On active le fonctionnement des menus
 	$("div.cef_nav_menu").cef_nav_menu();
-		
-	if (!settings.share_links) {
+	
+	// On supprime les liens de partage si nécessaire
+	if (!CEF.settings.share_links) {
 		$("#cef_navigation_links_right").remove();
 	}
 	
-	if (settings.add_top_margin) {
-		if (settings.with_animation) {
+	//On ajoute une marge si demandé.
+	if (CEF.settings.add_top_margin) {
+		if (CEF.settings.with_animation) {
 			$("#cef_navigation").css({top:-24}).animate({top:0}, 500);
 			$("body").animate({"margin-top":24}, 500);
 		}else{
 			$("body").css({"margin-top":24});
 		}
-		
 	}
 	
-	if (settings.scrolling_bar) {
+	// La barre de navigation est "fixée" si demandé
+	if (CEF.settings.scrolling_bar) {
 		$("#cef_navigation").css({position: "fixed"});
 	}
-		
-	if (settings.site_search) {
-		import_style("site_search.1-0.css");
-		google.load('search', '1', {language: 'fr', callback:initializeSearch, nocss:true });
+	
+	// On active la recherche interne si demandé	
+	if (CEF.settings.site_search) {
+		CEF.import_style("site_search.1-0.css");
+		google.load('search', '1', {language: 'fr', callback:CEF.initializeSearch, nocss:true });
 		$('#site_search').fieldWaterMark({defaultVal: 'Recherche dans ce site...'});
 	}else{
 		$('#site_search').fieldWaterMark({defaultVal: 'recherche.catholique.fr'});
@@ -264,12 +263,8 @@ var initializeCefNav = function(){
 	
 }
 
-if (settings.cef_root == "body") {
-	// L'initialisation a lieu une fois la page HTML chargée:
-	$(initializeCefNav);
-}else{
-	// L'initialisation a lieu immédiatement
-	initializeCefNav();
-}
+if (window.cefAsyncInit) {
+	cefAsyncInit();
+};
 	
 })(jQuery);
