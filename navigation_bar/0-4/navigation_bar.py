@@ -16,7 +16,7 @@ from google.appengine.api import memcache
 
 from django.utils.html import escape
 
-NEW_VALUE_WHEN_DEPLOYED = os.environ['CURRENT_VERSION_ID']
+NEW_VALUE_WHEN_DEPLOYED = os.environ['CURRENT_VERSION_ID'] + "_v0-4"
 jsm = jsmin.JavascriptMinify()
 
 class NavigationBar(webapp.RequestHandler):
