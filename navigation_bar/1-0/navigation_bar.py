@@ -19,11 +19,12 @@ from django.utils.html import escape
 NEW_VALUE_WHEN_DEPLOYED = os.environ['CURRENT_VERSION_ID']
 jsm = jsmin.JavascriptMinify()
 
-# class NewsLink(db.Model):
-#     name = db.StringProperty(required=True)
-# 	link = db.LinkProperty()
-#     date = db.DateProperty()
-#     active = db.BooleanProperty()
+class NewsLink(db.Model):
+	name = db.StringProperty(required=True)
+	author = db.UserProperty()
+	date = db.DateTimeProperty(auto_now_add=True)
+	url = db.LinkProperty(required=True)
+	order = db.IntegerProperty(required=True)
 
 class NavigationBar(webapp.RequestHandler):
 	def get(self):
@@ -42,7 +43,13 @@ class NavigationBar(webapp.RequestHandler):
 
 			f = open(os.path.join(os.path.dirname(__file__), 'nav_links.yaml'))
 			nav_links = yaml.load(f)
-			f.close()
+			f.close()			
+			
+			catholiquefr_actu = []
+			for link in NewsLink.all().order('order').fetch(15):
+				catholiquefr_actu.append({'name': link.name, 'url': link.url})
+			
+			nav_links['catholiquefr_actu'] = catholiquefr_actu
 			
 			def html_entities(x): return escape(x).encode("ascii", "xmlcharrefreplace")
 			

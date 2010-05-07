@@ -1,0 +1,30 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+{% for newsLink in newsLinks %}
+	<p>
+		{{ newsLink.order }}. <a href="{{ newsLink.url }}">{{ newsLink.name|escape }}</a>
+		(<a href="/admin/newsLinks/{{ newsLink.key|escape }}" class="DELETE">Supprimer</a>)
+	</p>
+{% endfor %}
+
+<h3>Ajouter un lien:</h3>
+<form action="newsLinks" method="post">
+	<p>
+		<label for="name">Nom:</label><input type="text" name="name" value="" id="name" />
+		<label for="url">URL:</label><input type="text" name="url" value="" id="url" />
+		<label for="order">Ordre:</label><input type="text" name="order" value="" id="order" size="3" />
+		<input type="submit" value="Ajouter">
+	</p>
+</form>
+
+<script type="text/javascript" charset="utf-8">
+	$("a.DELETE").click(function() {
+        $.ajax({ type: "DELETE", url: $(this).attr("href"), success: function(){ window.location = ""; }});
+		return false;
+	});
+</script>
+{% endblock %}
