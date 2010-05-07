@@ -1,19 +1,4 @@
-import cgi
-import os
-
-from google.appengine.api import users
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
-from google.appengine.ext import db
-from google.appengine.ext.webapp import template
-from google.appengine.api import memcache
-
-class NewsLink(db.Model):
-	name = db.StringProperty(required=True)
-	author = db.UserProperty()
-	date = db.DateTimeProperty(auto_now_add=True)
-	url = db.LinkProperty(required=True)
-	order = db.IntegerProperty(required=True)
+from cefbase import *
 
 class AdminPage(webapp.RequestHandler):
 	def get(self):

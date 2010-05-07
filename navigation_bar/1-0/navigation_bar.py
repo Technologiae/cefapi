@@ -1,30 +1,10 @@
 # Templates reference:
 # http://www.djangoproject.com/documentation/0.96/templates/
 
-import yaml
-import cgi
-import os
+from cefbase import *
+
 import jsmin
-from google.appengine.ext.webapp import template
-
-import StringIO
-
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
-from google.appengine.ext import db
-from google.appengine.api import memcache
-
-from django.utils.html import escape
-
-NEW_VALUE_WHEN_DEPLOYED = os.environ['CURRENT_VERSION_ID']
 jsm = jsmin.JavascriptMinify()
-
-class NewsLink(db.Model):
-	name = db.StringProperty(required=True)
-	author = db.UserProperty()
-	date = db.DateTimeProperty(auto_now_add=True)
-	url = db.LinkProperty(required=True)
-	order = db.IntegerProperty(required=True)
 
 class NavigationBar(webapp.RequestHandler):
 	def get(self):
@@ -88,7 +68,7 @@ class NavigationBar(webapp.RequestHandler):
 
 application = webapp.WSGIApplication(
 									 [('/api/cef.js', NavigationBar)],
-									 debug=True)
+									 debug=False)
 
 def main():
 	run_wsgi_app(application)
