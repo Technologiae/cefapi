@@ -19,7 +19,8 @@ class NavigationBar(webapp.RequestHandler):
 		if js_response is None:
 
 			js_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.js')
-			html_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.html')
+			navigation_bar_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.html')
+			search_results_template_path = os.path.join(os.path.dirname(__file__), 'search_results.html')
 
 			f = open(os.path.join(os.path.dirname(__file__), 'nav_links.yaml'))
 			nav_links = yaml.load(f)
@@ -38,16 +39,18 @@ class NavigationBar(webapp.RequestHandler):
 				for link in category:
 					link['name'] = html_entities(link['name'])
 			
-			html_template_values = {
+			navigation_bar_template_values = {
 				'nav_links' : nav_links,
 				'host': host
 			}
 			
 			# Rendering and escaping html template
-			html_template = template.render(html_template_path, html_template_values).replace('\n', '').replace('\t', '').replace('\"', '\\\"')
+			navigation_bar_template = template.render(navigation_bar_template_path, navigation_bar_template_values).replace('\n', '').replace('\t', '').replace('\"', '\\\"')
+			search_results_template = template.render(search_results_template_path, {}).replace('\n', '').replace('\t', '').replace('\"', '\\\"')
 
 			js_template_values = {
-				'navigation_bar_template': html_template,
+				'navigation_bar_template': navigation_bar_template,
+				'search_results_template': search_results_template,
 				'host': host
 			}
 

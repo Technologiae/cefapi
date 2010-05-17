@@ -129,17 +129,91 @@ window.CEF = {};
 CEF.settings = {
 	site_search: true,
 	share_links: true,
-	add_top_margin: false,
-	with_animation: true,
 	google_search_restriction: location.host,
-	scrolling_bar: true
+	scrolling_bar: true,
+	image_search_results: true,
+	news_search_results: true
 }
 
+CEF.settings.google_search_restriction_label = "Pages de " + CEF.settings.google_search_restriction;
+
 CEF.navigationBarHtml = "{{navigation_bar_template}}";
+CEF.searchResultsHtmlTemplate = "{{search_results_template}}";
 
 // Function utilitaire
 CEF.import_style = function (src){
 	jQuery('head').append('<link rel="stylesheet" href="http://' + api_host + '/stylesheets/' + src + '" type="text/css" media="all" />');
+}
+
+// Triggers search event
+CEF.search = function(query) {
+	var remove_cef_search_floatbox = function(){
+		$("div#cef_search_floatbox").remove();
+		$("div#cef_search_floatbox_bg").remove();
+		return false;
+	}
+	
+	window.scrollTo(0,0);
+	
+	if ($("div#cef_search_floatbox").length) {
+		remove_cef_search_floatbox();
+	}
+	
+	$("body").append(CEF.searchResultsHtmlTemplate.replace(/%escaped_query%/g, encodeURI(query)).replace(/%query%/g, query));
+	$("div#cef_search_floatbox").hide();
+	$("div#cef_search_floatbox_bg").click(remove_cef_search_floatbox);
+	$(".remove_cef_search_floatbox").click(remove_cef_search_floatbox);
+	
+	// ===========================================
+	// = Premier affichage: résultats de ce site =
+	// ===========================================
+	var thisSiteSearchControl = new google.search.SearchControl();
+	thisSiteSearchControl.setResultSetSize(google.search.Search.SMALL_RESULTSET);
+	// Set a callback so that whenever a search is started we will call XXX
+	// thisSiteSearchControl.setSearchStartingCallback(this, XXX);
+	
+	thisSiteSearchControl.setSearchCompleteCallback(this, function(sc, searcher){
+         $("div#cef_search_floatbox").fadeIn("fast");
+    });
+
+	// Web Search
+	var webSearch = new google.search.WebSearch();
+	webSearch.setUserDefinedLabel(CEF.settings.google_search_restriction_label);
+	//FIXME
+	webSearch.setSiteRestriction(CEF.settings.google_search_restriction);
+
+	// News search
+	var newsSearch = new google.search.NewsSearch();
+	newsSearch.setSiteRestriction("Église");
+
+	// Image Search
+	var imageSearch = new google.search.ImageSearch();
+	imageSearch.setUserDefinedLabel("Images");
+	imageSearch.setSiteRestriction(CEF.settings.google_search_restriction);
+
+	// Create 3 searchers and add them to the control
+	thisSiteSearchControl.addSearcher(webSearch);
+	if (CEF.settings.image_search_results) {
+		thisSiteSearchControl.addSearcher(imageSearch);
+	}
+	if (CEF.settings.news_search_results) {
+		thisSiteSearchControl.addSearcher(newsSearch);
+	}
+
+	// Set the options to draw the control in tabbed mode
+	var drawOptions = new google.search.DrawOptions();
+	drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
+	// drawOptions.setInput("site_search");
+
+	thisSiteSearchControl.draw('this_site_search_results', drawOptions);
+	
+	if (query == "") {}else{
+		thisSiteSearchControl.execute(query);
+		// Google Analytics tracking
+		if(typeof(pageTracker)!='undefined'){
+			pageTracker._trackPageview('/?search_query=' + query);
+		}
+	}
 }
 
 // Fonction d'initialisation de la recherche
@@ -147,67 +221,10 @@ CEF.initializeSearch = function(){
 	try {			
 		$("#cef_search").submit(function(){
 			var query = $("#site_search").attr("value");
-
-			var remove_cef_search_floatbox = function(){
-				$("div#cef_search_floatbox").remove();
-				$("div#cef_search_floatbox_bg").remove();
-				return false;
-			}
-			
-			window.scrollTo(0,0);
-			
-			$("body").append("<div id='cef_search_floatbox'><img id='google_custom_search_logo_img' src='http://www.google.com/cse/images/google_custom_search_smnar.gif' /><h2 id='cef_search_results_h2'>R&eacute;sultats pour \""+ query +"\"</h2><span class='remove_cef_search_floatbox' id='cef_close_floatbox'>X</span><div id='this_site_search_results'></div><div class='clear'></div><p id='search_explanation'><a href=\"http://recherche.catholique.fr/?q="+ query +"\">Rechercher \""+ query +"\" sur recherche.catholique.fr</a><br /><br />Découvrez le site <a href=\"http://recherche.catholique.fr/?q="+ query +"\">recherche.catholique.fr</a>, pour rechercher sur tous les sites des <strong>dioc&egrave;ses</strong>, des <strong>services nationaux</strong> de la CEF, et sur les sites en <strong>.cef.fr</strong> et en <strong>.catholique.fr</strong></p><p><a href='#' class='remove_cef_search_floatbox'>Fermer cette fen&ecirc;tre</a></p></div>")
-			$("body").append("<div id='cef_search_floatbox_bg'></div>");
-			$("div#cef_search_floatbox_bg").css({position:"fixed",zIndex:999999998,width:"100%",height:"100%",top:"0px",left:"0px",backgroundColor:"#000",opacity:"0.20"});
-			$("div#cef_search_floatbox_bg").click(remove_cef_search_floatbox);
-			$(".remove_cef_search_floatbox").click(remove_cef_search_floatbox);
-			
-			// ===========================================
-			// = Premier affichage: résultats de ce site =
-			// ===========================================
-			var thisSiteSearchControl = new google.search.SearchControl();
-			thisSiteSearchControl.setResultSetSize(google.search.Search.LARGE_RESULTSET);
-			// Set a callback so that whenever a search is started we will call XXX
-			// thisSiteSearchControl.setSearchStartingCallback(this, XXX);
-
-			// Web Search
-			var webSearch = new google.search.WebSearch();
-			webSearch.setUserDefinedLabel("Pages de " + CEF.settings.google_search_restriction);
-			//FIXME
-			webSearch.setSiteRestriction(CEF.settings.google_search_restriction);
-
-			// News search
-			var newsSearch = new google.search.NewsSearch();
-			newsSearch.setSiteRestriction("Église");
-
-			// Image Search
-			var imageSearch = new google.search.ImageSearch();
-			imageSearch.setUserDefinedLabel("Images");
-			imageSearch.setSiteRestriction(CEF.settings.google_search_restriction);
-
-			// Create 3 searchers and add them to the control
-			thisSiteSearchControl.addSearcher(webSearch);
-			thisSiteSearchControl.addSearcher(imageSearch);
-			thisSiteSearchControl.addSearcher(newsSearch);
-
-			// Set the options to draw the control in tabbed mode
-			var drawOptions = new google.search.DrawOptions();
-			drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
-			// drawOptions.setInput("site_search");
-
-			thisSiteSearchControl.draw('this_site_search_results', drawOptions);
-			
-			if (query == "") {}else{
-				thisSiteSearchControl.execute(query);
-				// Google Analytics tracking
-				if(typeof(pageTracker)!='undefined'){
-					pageTracker._trackPageview('/?search_query=' + query);
-				}
-			}
-
+			CEF.search(query);
 			return false;
 		});
-
+		
 	}catch(err){}
 };
 	
@@ -227,7 +244,7 @@ CEF.initNavigationBar = function(options){
 	
 	// On importe la feuille de style
 	// La barre de navigation ne s'affiche qu'une fois cette feuille de style chargée.
-	CEF.import_style("navigation_bar.1-0.css");
+	CEF.import_style("navigation_bar.1-0-2.css");
 	
 	// On active le fonctionnement des menus
 	$("div.cef_nav_menu").cef_nav_menu();
@@ -237,16 +254,6 @@ CEF.initNavigationBar = function(options){
 		$("#cef_navigation_links_right").remove();
 	}
 	
-	//On ajoute une marge si demandé.
-	if (CEF.settings.add_top_margin) {
-		if (CEF.settings.with_animation) {
-			$("#cef_navigation").css({top:-24}).animate({top:0}, 500);
-			$("body").animate({"margin-top":24}, 500);
-		}else{
-			$("body").css({"margin-top":24});
-		}
-	}
-	
 	// La barre de navigation est "fixée" si demandé
 	if (CEF.settings.scrolling_bar) {
 		$("#cef_navigation").css({position: "fixed"});
@@ -254,7 +261,7 @@ CEF.initNavigationBar = function(options){
 	
 	// On active la recherche interne si demandé	
 	if (CEF.settings.site_search) {
-		CEF.import_style("site_search.1-0.css");
+		CEF.import_style("site_search.1-0-2.css");
 		google.load('search', '1', {language: 'fr', callback:CEF.initializeSearch, nocss:true });
 		$('#site_search').fieldWaterMark({defaultVal: 'Recherche dans ce site...'});
 	}else{
@@ -262,6 +269,13 @@ CEF.initNavigationBar = function(options){
 	}
 	
 }
+
+$(window).load(function(){
+	$('#search_input_id').submit(function(){
+		$("#site_search").attr("value", "");
+		return false;
+	})
+});
 
 if (window.cefAsyncInit) {
 	cefAsyncInit();

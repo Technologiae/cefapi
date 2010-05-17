@@ -20,3 +20,8 @@ class NewsLink(db.Model):
 	date = db.DateTimeProperty(auto_now_add=True)
 	url = db.LinkProperty(required=True)
 	order = db.IntegerProperty(required=True)
+
+class Diocese(db.Model):
+	name = db.StringProperty(required=True)
+	owner = db.UserProperty(required=True)
+	site = db.LinkProperty()
