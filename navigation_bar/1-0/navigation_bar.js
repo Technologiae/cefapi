@@ -238,9 +238,13 @@ CEF.initNavigationBar = function(options){
 	if (typeof(google) == 'undefined'){
 		$.extend(CEF.settings, {site_search: false});
 	}
-	
-	// On ajoute le code HTML de la barre de navigation à l'élément #cef-root
-	$("#cef-root").append(CEF.navigationBarHtml);
+
+	// On ajoute le code HTML de la barre de navigation à l'élément #cef-root (ou sinon à <body>)
+	if ($("#cef-root").length) {
+		$("#cef-root").append(CEF.navigationBarHtml);
+	}else{
+		$("body").append(CEF.navigationBarHtml);
+	}
 	
 	// On importe la feuille de style
 	// La barre de navigation ne s'affiche qu'une fois cette feuille de style chargée.
@@ -279,6 +283,11 @@ $(window).load(function(){
 
 if (window.cefAsyncInit) {
 	cefAsyncInit();
+}else{
+	// Si la fonction d'initialisation asynchrone n'existe pas, on charge le script une fois la page "ready":
+	$(function(){
+		CEF.initNavigationBar();
+	});
 };
 	
 })(jQuery);
