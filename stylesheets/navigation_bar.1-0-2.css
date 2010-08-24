@@ -1,5 +1,6 @@
 /* @override 
 	http://localhost:8080/stylesheets/navigation_bar.1-0.css
+	http://recherche.catholique.fr/stylesheets/site_search.1-0-2.css
 */
 
 /* Reset div */
@@ -150,6 +151,8 @@ span#cef_navigation_title {
 	text-decoration: none;
 	font: normal normal bold 14px Arial, sans-serif;
 	color: #797979;
+	background-color: transparent;
+	background-image: none;
 }
 
 #cef_navigation .cef_nav_menu ul {
@@ -164,6 +167,10 @@ span#cef_navigation_title {
 	vertical-align: baseline;
 	list-style-position: inside;
 	list-style-type: disc;
+}
+
+#cef_navigation .cef_nav_menu ul li {
+	display: block;
 }
 
 #cef_navigation .cef_nav_menu div {

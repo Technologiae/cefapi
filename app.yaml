@@ -1,6 +1,6 @@
 # Reference: http://code.google.com/intl/fr-FR/appengine/docs/python/config/appconfig.html
 application: catholiquefr
-version: 1-0-2
+version: 1-0-5
 runtime: python
 api_version: 1
 
@@ -21,7 +21,10 @@ handlers:
 - url: /dioceses/.*
   script: dioceses/dioceses.py
   login: required
-  
+
+- url: /gdata
+  script: gdata_test.py
+
 - url: /stylesheets
   static_dir: stylesheets
   

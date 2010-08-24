@@ -15,6 +15,8 @@ cef:
   name: Jeunes
 - url: http://www.eglisemigrations.org
   name: Migrants
+- url: http://aep.cef.fr
+  name: Aumônerie de l’Enseignement Public
 - url: http://mission.cef.fr/
   name: "Œuvres pontif. missionnaires"
 - url: http://www.eglise.catholique.fr/conference-des-eveques-de-france/organisation/services-nationaux/unite-des-chretiens/
@@ -29,6 +31,8 @@ cef:
   name: Sectes et nouvelles croyances
 - url: http://www.bioethique.catholique.fr/
   name: Blog Bioéthique
+- url: http://www.narthex.fr
+  name: Narthex
 - url: http://www.denier.catholique.fr/
   name: Le denier
 
@@ -47,7 +51,7 @@ conferences:
   name: CORREF
 - url: http://instituts-seculiers.cef.fr/cnisf/
   name: CNISF
-- url: http://www.eglise.catholique.fr/ressources-annuaires/guide-de-leglise/mouvements-et-associations/mouvements-et-associations.html
+- url: http://www.eglise.catholique.fr/ressources-annuaires/guide-de-l-eglise/mouvements-et-associations/mouvements-et-associations.html
   name: Mouvements et associations
     
 annuaire_des_sites:
@@ -97,7 +101,7 @@ catholiquefr:
   name: "Actualités"
 - url: http://www.eglise.catholique.fr/actualites-et-evenements/agenda/agenda.html
   name: Agenda
-- url: http://www.eglise.catholique.fr/ressources-annuaires/guide-de-leglise/guide-de-leglise.html
+- url: http://www.eglise.catholique.fr/ressources-annuaires/guide-de-l-eglise/
   name: "Guide de l'Église"
 - url: http://www.eglise.catholique.fr/conference-des-eveques-de-france/
   name: "Conf. des évêques de France"
@@ -107,9 +111,9 @@ catholiquefr:
   name: Flux RSS
 
 dioceses:
-- url: http://www.eglise.catholique.fr/ressources-annuaires/guide-de-leglise/dioceses-et-paroisses/carte-des-dioceses.html
+- url: http://www.eglise.catholique.fr/ressources-annuaires/guide-de-l-eglise/dioceses-et-paroisses/
   name: "Coordonnées des diocèses"
-- url: http://www.eglise.catholique.fr/ressources-annuaires/guide-de-leglise/dioceses-et-paroisses/carte-des-dioceses.html
+- url: http://www.eglise.catholique.fr/ressources-annuaires/guide-de-l-eglise/dioceses-et-paroisses/
   name: "Carte des diocèses"
 - url: http://www.eglise.catholique.fr/ressources-annuaires/sites-et-liens/liens.html?categorieID=23
   name: "Sites web des diocèses"

@@ -155,65 +155,78 @@ CEF.search = function(query) {
 	
 	window.scrollTo(0,0);
 	
-	if ($("div#cef_search_floatbox").length) {
-		remove_cef_search_floatbox();
-	}
-	
-	$("body").append(CEF.searchResultsHtmlTemplate.replace(/%escaped_query%/g, encodeURI(query)).replace(/%query%/g, query));
-	$("div#cef_search_floatbox").hide();
-	$("div#cef_search_floatbox_bg").click(remove_cef_search_floatbox);
-	$(".remove_cef_search_floatbox").click(remove_cef_search_floatbox);
-	
-	// ===========================================
-	// = Premier affichage: résultats de ce site =
-	// ===========================================
-	var thisSiteSearchControl = new google.search.SearchControl();
-	thisSiteSearchControl.setResultSetSize(google.search.Search.SMALL_RESULTSET);
-	// Set a callback so that whenever a search is started we will call XXX
-	// thisSiteSearchControl.setSearchStartingCallback(this, XXX);
-	
-	thisSiteSearchControl.setSearchCompleteCallback(this, function(sc, searcher){
-         $("div#cef_search_floatbox").fadeIn("fast");
-    });
+	if (query == "" || query == "indiquez ici votre recherche...") {
+		alert("Entrez le texte de votre recherche dans le rectangle à côté de la loupe !");
+	}else{
+		// Si la fenêtre est déjà affichée, on la supprime
+		if ($("div#cef_search_floatbox").length) {
+			remove_cef_search_floatbox();
+		}
 
-	// Web Search
-	var webSearch = new google.search.WebSearch();
-	webSearch.setUserDefinedLabel(CEF.settings.google_search_restriction_label);
-	//FIXME
-	webSearch.setSiteRestriction(CEF.settings.google_search_restriction);
+		$("body").append(CEF.searchResultsHtmlTemplate.replace(/%escaped_query%/g, encodeURI(query)).replace(/%query%/g, query));
+		$("div#cef_search_floatbox").hide();
+		$("div#cef_search_floatbox_bg").click(remove_cef_search_floatbox);
+		$(".remove_cef_search_floatbox").click(remove_cef_search_floatbox);
 
-	// News search
-	var newsSearch = new google.search.NewsSearch();
-	newsSearch.setSiteRestriction("Église");
+		// Problèmes avec IE
+		if ($.browser.msie) {
+			$("#cef_search_floatbox_bg").css("background-color", "transparent");
+		}
 
-	// Image Search
-	var imageSearch = new google.search.ImageSearch();
-	imageSearch.setUserDefinedLabel("Images");
-	imageSearch.setSiteRestriction(CEF.settings.google_search_restriction);
+		// ===========================================
+		// = Premier affichage: résultats de ce site =
+		// ===========================================
+		var thisSiteSearchControl = new google.search.SearchControl();
+		thisSiteSearchControl.setResultSetSize(google.search.Search.SMALL_RESULTSET);
+		// Set a callback so that whenever a search is started we will call XXX
+		// thisSiteSearchControl.setSearchStartingCallback(this, XXX);
 
-	// Create 3 searchers and add them to the control
-	thisSiteSearchControl.addSearcher(webSearch);
-	if (CEF.settings.image_search_results) {
-		thisSiteSearchControl.addSearcher(imageSearch);
-	}
-	if (CEF.settings.news_search_results) {
-		thisSiteSearchControl.addSearcher(newsSearch);
-	}
+		thisSiteSearchControl.setSearchCompleteCallback(this, function(sc, searcher){
+	         $("div#cef_search_floatbox").fadeIn("fast");
+			if(webSearch.results.length==0){
+				$("#this_site_search_results").html("Aucun résultat n'a été trouvé !");
+			}
+	    });
 
-	// Set the options to draw the control in tabbed mode
-	var drawOptions = new google.search.DrawOptions();
-	drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
-	// drawOptions.setInput("site_search");
+		// Web Search
+		var webSearch = new google.search.WebSearch();
+		webSearch.setUserDefinedLabel(CEF.settings.google_search_restriction_label);
+		//FIXME
+		webSearch.setSiteRestriction(CEF.settings.google_search_restriction);
 
-	thisSiteSearchControl.draw('this_site_search_results', drawOptions);
-	
-	if (query == "") {}else{
+		// News search
+		var newsSearch = new google.search.NewsSearch();
+		newsSearch.setSiteRestriction("Église");
+
+		// Image Search
+		var imageSearch = new google.search.ImageSearch();
+		imageSearch.setUserDefinedLabel("Images");
+		imageSearch.setSiteRestriction(CEF.settings.google_search_restriction);
+
+		// Create 3 searchers and add them to the control
+		thisSiteSearchControl.addSearcher(webSearch);
+		if (CEF.settings.image_search_results) {
+			thisSiteSearchControl.addSearcher(imageSearch);
+		}
+		if (CEF.settings.news_search_results) {
+			thisSiteSearchControl.addSearcher(newsSearch);
+		}
+
+		// Set the options to draw the control in tabbed mode
+		var drawOptions = new google.search.DrawOptions();
+		drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
+		// drawOptions.setInput("site_search");
+
+		thisSiteSearchControl.draw('this_site_search_results', drawOptions);
+
 		thisSiteSearchControl.execute(query);
+				
 		// Google Analytics tracking
 		if(typeof(pageTracker)!='undefined'){
 			pageTracker._trackPageview('/?search_query=' + query);
 		}
 	}
+	
 }
 
 // Fonction d'initialisation de la recherche
@@ -267,9 +280,9 @@ CEF.initNavigationBar = function(options){
 	if (CEF.settings.site_search) {
 		CEF.import_style("site_search.1-0-2.css");
 		google.load('search', '1', {language: 'fr', callback:CEF.initializeSearch, nocss:true });
-		$('#site_search').fieldWaterMark({defaultVal: 'Recherche dans ce site...'});
+		$('#site_search').fieldWaterMark({defaultVal: 'indiquez ici votre recherche...'});
 	}else{
-		$('#site_search').fieldWaterMark({defaultVal: 'recherche.catholique.fr'});
+		$('#site_search').fieldWaterMark({defaultVal: 'recherche sites catholiques'});
 	}
 	
 }
