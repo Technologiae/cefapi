@@ -1,6 +1,6 @@
 # Reference: http://code.google.com/intl/fr-FR/appengine/docs/python/config/appconfig.html
 application: catholiquefr
-version: 1-0-5
+version: 1-0-6
 runtime: python
 api_version: 1
 

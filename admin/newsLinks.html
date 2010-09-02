@@ -4,22 +4,47 @@
 
 {% block content %}
 
+<style type="text/css">
+	#sortable { list-style-type: none; margin: 0; padding: 0; width: 600px; }
+	#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 14px; height: 18px; }
+	#sortable li span { position: absolute; margin-left: -1.3em; }
+	#sortable li a.DELETE { position: absolute; left: 650px; margin-left: -1.3em; }
+	</style>
+	<script type="text/javascript">
+	$(function() {
+		$("#sortable").sortable({update: function(event, ui) {
+			var array = $(this).sortable('toArray');
+			if (array!=[]) {
+				var listOrder = $.map(array, function (a) { return (a.split("-"))[1]; }).toString();
+			 	console.log(listOrder); 
+				$.ajax({ type: "GET", data: {'order': listOrder},  url: "/admin/newsLinks/reorder", success: function(){ window.location = ""; }});
+			};
+			}});
+		return false;
+		$("#sortable").disableSelection();
+	});
+	</script>
+<p>(Faites glisser pour modifier l&#x27;ordre)</p>
+	<ul id="sortable">
 {% for newsLink in newsLinks %}
-	<p>
-		{{ newsLink.order }}. <a href="{{ newsLink.url }}">{{ newsLink.name|escape }}</a>
-		(<a href="/admin/newsLinks/{{ newsLink.key|escape }}" class="DELETE">Supprimer</a>)
-	</p>
+		<li class="ui-state-default" id="newsLink-{{ newsLink.order }}">
+			<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+			{{ newsLink.name|escape }} : <a href="{{ newsLink.url }}">{{ newsLink.url|escape }}</a>
+			<a href="/admin/newsLinks/{{ newsLink.key|escape }}" class="DELETE">Supprimer</a>
+		</li>
 {% endfor %}
+	</ul>
 
 <h3>Ajouter un lien:</h3>
 <form action="newsLinks" method="post">
 	<p>
 		<label for="name">Nom:</label><input type="text" name="name" value="" id="name" />
 		<label for="url">URL:</label><input type="text" name="url" value="" id="url" />
-		<label for="order">Ordre:</label><input type="text" name="order" value="" id="order" size="3" />
 		<input type="submit" value="Ajouter">
 	</p>
 </form>
+
+<a href="/admin/" >Retour au menu</a>
 
 <script type="text/javascript" charset="utf-8">
 	$("a.DELETE").click(function() {
@@ -27,4 +52,5 @@
 		return false;
 	});
 </script>
+
 {% endblock %}

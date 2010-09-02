@@ -21,10 +21,12 @@ class NewsLinksPage(webapp.RequestHandler):
 		self.response.out.write(template.render(path, template_values))
 		
 	def post(self):
+		new_position = max(map(lambda x: x.order, NewsLink.all().fetch(50))) + 1
+		
 		newsLink = NewsLink(
 			name = self.request.get('name'),
 			url = self.request.get('url'),
-			order = int(self.request.get('order'))
+			order = new_position
 		)
 
 		if users.get_current_user():
@@ -35,10 +37,32 @@ class NewsLinksPage(webapp.RequestHandler):
 			
 		self.redirect('newsLinks')
 
+class NewsLinksReorder(webapp.RequestHandler):
+	def get(self):
+		order = map(int, self.request.get('order').split(","))
+		newsLinks = NewsLink.all().order('order').fetch(50)
+		
+		for i in range(0,len(newsLinks)):
+			newsLinks[order[i]].order = i
+
+		db.put(newsLinks)
+		memcache.flush_all()
+		
+		self.redirect('/admin/newsLinks')
+
 class NewsLinkPage(webapp.RequestHandler):
 	def delete(self, key):
 		newsLink = NewsLink.get(key)
 		newsLink.delete()
+		# Reorder other links
+		i = 0
+		newsLinks = NewsLink.all().order('order').fetch(50)
+		for newsLink in newsLinks:
+			newsLink.order = i
+			newsLink.put()
+			i+=1
+		db.put(newsLinks)
+		# Flush memcache
 		memcache.flush_all()
 		
 		self.redirect('/admin/newsLinks')
@@ -46,6 +70,7 @@ class NewsLinkPage(webapp.RequestHandler):
 application = webapp.WSGIApplication(
 									 [('/admin/', AdminPage),
 									  ('/admin/newsLinks', NewsLinksPage),
+									  ('/admin/newsLinks/reorder', NewsLinksReorder),
 									  (r'/admin/newsLinks/(.*)', NewsLinkPage)],
 									 debug=True)
 
