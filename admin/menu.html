@@ -49,8 +49,12 @@
 
 <p>
 	N.B.: Ce menu est utilisé par les barres de navigation:
-	{% for navbar in navbar_first_set %}<a href="/admin/navbars/{{ navbar.key }}">{{ navbar.name|escape }} ({{ navbar.code|escape }}.js)</a>{% endfor %}
-	{% for navbar in navbar_second_set %}<a href="/admin/navbars/{{ navbar.key }}">{{ navbar.name|escape }} ({{ navbar.code|escape }}.js)</a>{% endfor %}
+	<ul>
+		{% for navbar in navbar_first_set %}<li><a href="/admin/navbars/{{ navbar.key }}">{{ navbar.name|escape }} ({{ navbar.code|escape }}.js)</a></li>{% endfor %}
+		{% for navbar in navbar_second_set %}<li><a href="/admin/navbars/{{ navbar.key }}">{{ navbar.name|escape }} ({{ navbar.code|escape }}.js)</a></li>{% endfor %}
+	</ul>
+	
+	
 </p>
 
 <a href="/admin/" >Retour au menu principal</a>

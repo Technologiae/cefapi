@@ -2,6 +2,10 @@ import cgi
 import os
 import yaml
 import StringIO
+import sys
+# sys.path.insert(0, 'django.zip')
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
 from google.appengine.api import users
 from google.appengine.ext import webapp
@@ -11,6 +15,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import memcache
 
 from django.utils.html import escape
+
 
 NEW_VALUE_WHEN_DEPLOYED = os.environ['CURRENT_VERSION_ID']
 

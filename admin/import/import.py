@@ -7,7 +7,7 @@ class ImportTask(webapp.RequestHandler):
 		links_init = yaml.load(f)
 		f.close()
 		
-		menu_cef = Menu(name=u"Conf. des évêques de France", special_kind="cef").put()
+		menu_cef = Menu(name=u"Conf. des eveques de France", special_kind="cef").put()
 		for position, link in enumerate(links_init['cef']):
 			Link(name=link['name'], url=link['url'], order=position, menu=menu_cef).put()
 		
@@ -19,7 +19,7 @@ class ImportTask(webapp.RequestHandler):
 		for position, link in enumerate(links_init['messes']):
 			Link(name=link['name'], url=link['url'], order=position, menu=menu_messes).put()
 		
-		menu_eglise_universelle = Menu(name=u"Église universelle", special_kind="eglise_universelle").put()
+		menu_eglise_universelle = Menu(name=u"Eglise universelle", special_kind="eglise_universelle").put()
 		for position, link in enumerate(links_init['eglise_universelle']):
 			Link(name=link['name'], url=link['url'], order=position, menu=menu_eglise_universelle).put()
 			
@@ -27,7 +27,7 @@ class ImportTask(webapp.RequestHandler):
 		for position, link in enumerate(links_init['annuaire_des_sites']):
 			Link(name=link['name'], url=link['url'], order=position, menu=menu_annuaire_des_sites).put()
 		
-		menu_dioceses = Menu(name=u"Diocèses", special_kind="dioceses").put()
+		menu_dioceses = Menu(name=u"Dioceses", special_kind="dioceses").put()
 		for position, link in enumerate(links_init['dioceses']):
 			Link(name=link['name'], url=link['url'], order=position, menu=menu_dioceses).put()
 		
@@ -39,7 +39,7 @@ class ImportTask(webapp.RequestHandler):
 		for position, link in enumerate(links_init['catholiquefr']):
 			Link(name=link['name'], url=link['url'], order=position, menu=menu_catholiquefr).put()
 		
-		menu_actus = Menu(name = u"Actualités", author = users.get_current_user()).put()
+		menu_actus = Menu(name = "Dossiers actu", author = users.get_current_user()).put()
 		
 		cef_navbar = Navbar(code = "cef", name = "CEF")
 		cef_navbar.first_menu = menu_catholiquefr

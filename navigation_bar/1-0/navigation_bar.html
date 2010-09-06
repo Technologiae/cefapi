@@ -2,7 +2,7 @@
 <!-- À cause de l'option style="display: none;"
 	la barre de navigation ne s'affiche qu'une fois la feuille de style chargée (elle contient une instruction contraire) -->
 <div id='cef_navigation' style="display: none;">
-
+	{% if not social_links_off %}
 	<div id='cef_navigation_links_right' class='cef_navigation_links'>
 		Partager&nbsp;: <a id="facebook_share_link" href="#"><img src="http://{{host}}/img/FaceBook-icon.png" width="16" height="16" alt="Partager sur facebook"></a>
 		<a id="twitter_share_link"  href="#"><img src="http://{{host}}/img/Twitter-icon.png" width="16" height="16" alt="Partager sur Twitter"></a>
@@ -11,7 +11,7 @@
 		jQuery("#facebook_share_link").attr("href", "http://www.facebook.com/share.php?u="+location.href);
 		jQuery("#twitter_share_link").attr("href", "http://twitter.com/home?status="+location.href);
 	</script>
-	
+	{% endif %}
 	<div id='site_search_form' class='cef_navigation_links'>
 		<form action='http://recherche.catholique.fr' method='get' accept-charset='utf-8' name='cef_search' id='cef_search'>
 		<input type='text' name='q' value='' id='site_search' />

@@ -4,25 +4,35 @@
 
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
-				$("table").dataTable();
+				$("table").dataTable({
+					sPaginationType: "full_numbers",
+					bLengthChange: false,
+					iDisplayLength: 20
+				});
 			} );
 		</script>
 
 <h2>Liste des barres de navigation</h2>
 <table id="navbars" cellpadding="5" cellspacing="0" border="0">
 	<thead>
-	<tr><th>Nom</th><th>Code</th><th>Premier Menu</th><th>Deuxième Menu</th><th>Action</th></tr>
+	<tr><th>Nom</th><th>Code</th><th>Menus</th><th>Action</th></tr>
 	</thead>
 	<tbody>
 	{% for navbar in navbars %}
 	<tr>
 		<td>{{ navbar.name|escape }}</td>
 		<td>{{ navbar.code|escape }}.js</td>
-		<td><a href="/admin/menus/{{ navbar.first_menu.key }}">{{ navbar.first_menu.name|escape }}</a></td>
-		<td><a href="/admin/menus/{{ navbar.second_menu.key }}">{{ navbar.second_menu.name|escape }}</a></td>
 		<td>
-			<a href="/admin/navbars/{{ navbar.key }}">D&eacute;tails/Modifier</a> | 
-			{% if not menu.special_kind %}<a class="DELETE" href="/admin/navbars/{{ navbar.key }}">Supprimer</a>{% endif %}
+			<ul>
+				{% if navbar.first_menu %}<li><a href="/admin/menus/{{ navbar.first_menu.key }}">{{ navbar.first_menu.name|escape }}</a></li>{% endif %}
+				{% if navbar.second_menu %}<li><a href="/admin/menus/{{ navbar.second_menu.key }}">{{ navbar.second_menu.name|escape }}</a></li>{% endif %}
+			</ul>
+			
+		</td>
+		<td>
+			<a class="button_link" href="/admin/navbars/{{ navbar.key }}/instructions">Instructions</a> 
+			<a class="button_link" href="/admin/navbars/{{ navbar.key }}">Modifier</a> 
+			{% if not menu.special_kind %}<a class="DELETE button_link" href="/admin/navbars/{{ navbar.key }}">Supprimer</a>{% endif %}
 		</td>
 	</tr>
 	{% endfor %}
@@ -31,25 +41,33 @@
 
 
 
-<p>
-	Nouvelle barre de navigation:
+<fieldset>
+    <legend>Nouvelle barre de navigation</legend>
 	<form action="/admin/navbars/" method="post" accept-charset="utf-8">
-		Nom : <input type="text" name="name"> ; Code : <input type="text" name="code" />
+		Nom : <input type="text" name="name">
+		Code : <input type="text" name="code" />
 		<input type="submit" value="Créer" />
 	</form>
-</p>
+</fieldset>
 
 <h2>Liste des menus</h2>
 <table id="menus" cellpadding="5" cellspacing="0" border="0">
 	<thead>
-	<tr><th>Nom</th><th>Type special ?</th><th>Action</th></tr>
+	<tr><th>Nom</th><th>Navbars</th><th>Type special ?</th><th>Action</th></tr>
 	</thead>
 	<tbody>
 	{% for menu in menus %}
 	<tr>
-		<td><a href="/admin/menus/{{ menu.key }}">{{ menu.name|escape }}</a></td>
+		<td>{{ menu.name|escape }}</td>
+		<td>
+			{% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
+			{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %}
+		</td>
 		<td>{% if menu.special_kind %}"{{menu.special_kind}}"{% else %}--{% endif %}</td>
-		<td><a class="DELETE" href="/admin/menus/{{ menu.key }}">Supprimer</a></td>
+		<td>
+			<a class="button_link" href="/admin/menus/{{ menu.key }}">Modifier</a> 
+			{% if not menu.special_kind %}<a class="button_link DELETE" href="/admin/menus/{{ menu.key }}">Supprimer</a>{% endif %}
+		</td>
 	</tr>
 	{% endfor %}
 	</tbody>
@@ -57,7 +75,10 @@
 
 <script type="text/javascript" charset="utf-8">
 	$("a.DELETE").click(function() {
-        $.ajax({ type: "DELETE", url: $(this).attr("href"), success: function(message){ alert(message); window.location = ""; }});
+		if (confirm("Êtes-vous sûrs de vouloir supprimer cet élément ?")) {
+			$.ajax({ type: "DELETE", url: $(this).attr("href"), success: function(message){ alert(message); window.location = ""; }});
+
+		};
 		return false;
 	});
 </script>

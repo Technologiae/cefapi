@@ -5,20 +5,79 @@
 {% block content %}
 <div id="cef-root"></div> 
 		
-		<script type="text/javascript" charset="utf-8"> 
-		window.cefAsyncInit = function() {
-		    CEF.initNavigationBar({
-				site_search: false
-			});
-		};
-		(function() {
-		var e = document.createElement('script'); e.async = true;
-		e.src = '/api/{{navbar.code}}.js?random={{random}}';
-		document.getElementById('cef-root').appendChild(e);
-		}());
-		</script>
+<script type="text/javascript" charset="utf-8"> 
+window.cefAsyncInit = function() {
+    CEF.initNavigationBar({
+		site_search: false
+	});
+};
+(function() {
+var e = document.createElement('script'); e.async = true;
+e.src = '/api/{{navbar.code}}.js?random={{random}}';
+document.getElementById('cef-root').appendChild(e);
+}());
+</script>
+		
+<script type="text/javascript" charset="utf-8">
+$(function() {
+	$("#navbar_put_form").change(function(){$(this).submit();});
+	
+	$("#new_navbar_first_dialog").dialog({
+		autoOpen: false,
+		height: 200,
+		width: 200,
+		modal: true,
+		buttons: {
+			'Valider': function() {
+				$("#new_navbar_first_dialog").submit();
+				$(this).dialog('close');
+			},
+			'Annuler': function() {
+				$(this).dialog('close');
+			}
+		}
+	});
+	
+	$("#new_navbar_second_dialog").dialog({
+		autoOpen: false,
+		height: 200,
+		width: 200,
+		modal: true,
+		buttons: {
+			'Valider': function() {
+				$("#new_navbar_second_dialog").submit();
+				$(this).dialog('close');
+			},
+			'Annuler': function() {
+				$(this).dialog('close');
+			}
+		}
+	});
+			
+	$('#new_navbar_first_button').button().click(function() {
+		$('#new_navbar_first_dialog').dialog('open'); return false;
+	});
+	$('#new_navbar_second_button').button().click(function() {
+		$('#new_navbar_second_dialog').dialog('open'); return false;
+	});
+});
+</script>
 
-<p>URL : <a href="http://recherche.catholique.fr/api/{{navbar.code}}.js">http://recherche.catholique.fr/api/{{navbar.code}}.js</a></p>
+<p>URL : <a href="http://{{host}}/api/{{navbar.code}}.js">http://{{host}}/api/{{navbar.code}}.js</a></p>
+
+<div id="new_navbar_first_dialog" title="Cr&eacute;er un nouveau menu">
+	<form action="/admin/menus/" method="post" accept-charset="utf-8">
+		Nom de ce menu : <input type="text" name="name" />
+		<input type="hidden" name="navbar_first_key" value="{{ navbar.key }}" />
+	</form>
+</div>
+
+<div id="new_navbar_second_dialog" title="Cr&eacute;er un nouveau menu">
+	<form action="/admin/menus/" method="post" accept-charset="utf-8">
+		Nom de ce menu : <input type="text" name="name" />
+		<input type="hidden" name="navbar_second_key" value="{{ navbar.key }}" />
+	</form>
+</div>
 
 <form id="navbar_put_form" action="/admin/navbars/{{ navbar.key }}" method="post">
 	<input type="hidden" name="method" value="put" />
@@ -26,39 +85,46 @@
 		<select name="first_menu" id="first_menu_select" size="1">
 			<option value="None">-- aucun --</option>
 			{% for menu in menus_list %}
-			<option value="{{menu.key}}" {% ifequal navbar.first_menu.key menu.key %}selected="selected"{% endifequal %}>{{menu.name|escape}}</option>
+			<option value="{{menu.key}}" {% ifequal navbar.first_menu.key menu.key %}selected="selected"{% endifequal %}>
+				{{menu.name|escape}}
+				({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
+				{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %})
+			</option>
 			{% endfor %}
 		</select>
-		(<a href="/admin/menus/{{ navbar.first_menu.key }}">Modifier le menu {{ navbar.first_menu.name|escape }}</a>)
-		<p>
-</p>
+		<a class="button_link" href="/admin/menus/{{ navbar.first_menu.key }}">Modifier ce menu</a>
+		<button id="new_navbar_first_button">Nouveau menu</button>
 	</p>
 	<p>Deuxième menu : 
 		<select name="second_menu" id="second_menu_select" size="1">
 			<option value="None">-- aucun --</option>
 			{% for menu in menus_list %}
-			<option value="{{menu.key}}" {% ifequal navbar.second_menu.key menu.key %}selected="selected"{% endifequal %}>{{menu.name|escape}}</option>
+			<option value="{{menu.key}}" {% ifequal navbar.second_menu.key menu.key %}selected="selected"{% endifequal %}>
+				{{menu.name|escape}}
+				({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
+				{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %})
+			</option>
 			{% endfor %}
 		</select>
-		(<a href="/admin/menus/{{ navbar.second_menu.key }}">Modifier le menu {{ navbar.second_menu.name|escape }}</a>)
+		<a class="button_link" href="/admin/menus/{{ navbar.second_menu.key }}">Modifier ce menu</a>
+		<button id="new_navbar_second_button">Nouveau menu</button>
+	</p>
+	{{ settings }}
+
+	<p>
+		<input type="checkbox" name="settings" value="dioceses_menu_off" {% for set in navbar.settings %}{% ifequal set "dioceses_menu_off" %}checked="checked"{% endifequal %}{%endfor%} />Désactiver le menu "diocèses"<br />
+		<input type="checkbox" name="settings" value="acces_direct_menu_off" {% for set in navbar.settings %}{% ifequal set "acces_direct_menu_off" %}checked="checked"{% endifequal %}{%endfor%} />Désactiver le menu "accès direct"<br />
+		<input type="checkbox" name="settings" value="ressources_menu_off" {% for set in navbar.settings %}{% ifequal set "ressources_menu_off" %}checked="checked"{% endifequal %}{%endfor%} />Désactiver le menu "Ressources"<br />
+		<input type="checkbox" name="settings" value="social_links_off" {% for set in navbar.settings %}{% ifequal set "social_links_off" %}checked="checked"{% endifequal %}{%endfor%} />Désactiver les liens de partage<br />
 	</p>
 	
-	<p><input type="submit" value="Valider les modifications &rarr;" /></p>
+	<!-- <p>
+		Moteur de recherche :<br />
+		<input type="radio" name="search_form" value="this_site" id="this_site_input"><label for="this_site_input">Rechercher dans le site courant</label><br />
+		<input type="radio" name="search_form" value="recherche.catholique.fr" id="catholiquefr_input"><label for="catholiquefr_input">Rechercher dans eglise.catholique.fr</label><br />
+		<input type="radio" name="search_form" value="other" id="other_search_input"><label for="other_search_input">Rechercher avec un autre moteur</label><br />
+	</p> -->
 </form>
-
-Nouveau menu (1):
-	<form action="/admin/menus/" method="post" accept-charset="utf-8">
-		<input type="text" name="name" />
-		<input type="hidden" name="navbar_first_key" value="{{ navbar.key }}" />
-		<input type="submit" value="Créer" />
-	</form>
-
-Nouveau menu (2):
-	<form action="/admin/menus/" method="post" accept-charset="utf-8">
-		<input type="text" name="name" />
-		<input type="hidden" name="navbar_second_key" value="{{ navbar.key }}" />
-		<input type="submit" value="Créer" />
-	</form>
 
 <p><a href="/admin/navbars/{{ navbar.key }}/instructions" >Instructions pour l&#x27;installation de cette barre</a></p>
 

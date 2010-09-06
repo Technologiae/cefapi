@@ -19,22 +19,28 @@ class NavbarScript(webapp.RequestHandler):
 		if js_response is None:
 			navbar = Navbar.all().filter("code =", code)[0]
 			
-			settings = {
+			template_vars = {
 				'dioceses_menu_off': False,
 				'acces_direct_menu_off': False,
 				'ressources_menu_off': False,
+				'social_links_off': False,
 				'host': host
 			}
+						
+			template_vars.update(dict((setting,True) for setting in navbar.settings))
 			
-			nav_links = {
-				'cef': Menu.all().filter("special_kind =", "cef").fetch(1)[0].link_set,
-				'liturgie': Menu.all().filter("special_kind =", "liturgie").fetch(1)[0].link_set,
-				'autres': Menu.all().filter("special_kind =", "autres").fetch(1)[0].link_set,
-				'messes': Menu.all().filter("special_kind =", "messes").fetch(1)[0].link_set,
-				'eglise_universelle': Menu.all().filter("special_kind =", "eglise_universelle").fetch(1)[0].link_set,
-				'annuaire_des_sites': Menu.all().filter("special_kind =", "annuaire_des_sites").fetch(1)[0].link_set,
-				'dioceses': Menu.all().filter("special_kind =", "dioceses").fetch(1)[0].link_set,
-			}
+			try:
+				nav_links = {
+					'cef': Menu.all().filter("special_kind =", "cef").fetch(1)[0].link_set,
+					'liturgie': Menu.all().filter("special_kind =", "liturgie").fetch(1)[0].link_set,
+					'autres': Menu.all().filter("special_kind =", "autres").fetch(1)[0].link_set,
+					'messes': Menu.all().filter("special_kind =", "messes").fetch(1)[0].link_set,
+					'eglise_universelle': Menu.all().filter("special_kind =", "eglise_universelle").fetch(1)[0].link_set,
+					'annuaire_des_sites': Menu.all().filter("special_kind =", "annuaire_des_sites").fetch(1)[0].link_set,
+					'dioceses': Menu.all().filter("special_kind =", "dioceses").fetch(1)[0].link_set,
+				}
+			except IndexError:
+				raise NameError('Un des menus speciaux est manquant en base de donnees... Avez vous initialise les menus ?')		
 			
 			def html_entities(x): return escape(x).encode("ascii", "xmlcharrefreplace")
 			
@@ -43,18 +49,18 @@ class NavbarScript(webapp.RequestHandler):
 				for link in category:
 					link.name = html_entities(link.name)
 			
-			settings['nav_links'] = nav_links
-			settings['first_menu'] = navbar.first_menu
-			if settings['first_menu']: settings['first_menu_links'] = navbar.first_menu.link_set
-			settings['second_menu'] = navbar.second_menu
-			if settings['second_menu']: settings['second_menu_links'] = navbar.second_menu.link_set
+			template_vars['nav_links'] = nav_links
+			template_vars['first_menu'] = navbar.first_menu
+			if template_vars['first_menu']: template_vars['first_menu_links'] = navbar.first_menu.link_set
+			template_vars['second_menu'] = navbar.second_menu
+			if template_vars['second_menu']: template_vars['second_menu_links'] = navbar.second_menu.link_set
 			
 			js_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.js')
 			navbar_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.html')
 			search_results_template_path = os.path.join(os.path.dirname(__file__), 'search_results.html')
 			
 			# Rendering and escaping html template
-			navbar_template = template.render(navbar_template_path, settings).replace('\n', '').replace('\t', '').replace('\"', '\\\"')
+			navbar_template = template.render(navbar_template_path, template_vars).replace('\n', '').replace('\t', '').replace('\"', '\\\"')
 			search_results_template = template.render(search_results_template_path, {}).replace('\n', '').replace('\t', '').replace('\"', '\\\"')
 
 			js_template_values = {
@@ -65,7 +71,7 @@ class NavbarScript(webapp.RequestHandler):
 
 			js_response = template.render(js_template_path, js_template_values);
 			
-			# Javascript minified
+			## Javascript minified
 			output = StringIO.StringIO()
 			jsm.minify(StringIO.StringIO(js_response), output)
 			js_response = output.getvalue()

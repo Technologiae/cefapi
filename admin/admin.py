@@ -4,9 +4,10 @@ class AdminPage(webapp.RequestHandler):
 	def get(self):
 		navbars = Navbar.all().order('name').fetch(200)
 		menus = Menu.all().order('name').fetch(200)
+		menus_with_navbars = map(lambda menu: {'name': menu.name, 'special_kind': menu.special_kind, 'key': menu.key(), 'navbar_first_set':menu.navbar_first_set, 'navbar_second_set':menu.navbar_second_set}, menus)
 		
 		path = os.path.join(os.path.dirname(__file__), 'admin.html')
-		self.response.out.write(template.render(path, {'menus': menus, 'navbars': navbars}))
+		self.response.out.write(template.render(path, {'menus': menus_with_navbars, 'navbars': navbars}))
 		
 class MenuPage(webapp.RequestHandler):
 	def get(self, menu_key):
@@ -37,7 +38,7 @@ class MenuPage(webapp.RequestHandler):
 			# Flush memcache
 			memcache.flush_all()
 			
-			self.response.out.write("Le menu et ses liens ont été supprimés avec succès !")
+			self.response.out.write("Le menu et ses liens ont ete supprimes avec succes !")
 
 class MenuReorder(webapp.RequestHandler):
 	def get(self, menu_key):
