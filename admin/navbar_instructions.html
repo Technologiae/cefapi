@@ -1,0 +1,77 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}Barre de navigation "{{ navbar.name }}"{% endblock %}
+
+{% block head_end %}
+<link href="http://alexgorbatchev.com/pub/sh/3.0.83/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+<link href="http://alexgorbatchev.com/pub/sh/3.0.83/styles/shCore.css" rel="stylesheet" type="text/css" />
+<script src="http://alexgorbatchev.com/pub/sh/3.0.83/scripts/shCore.js" type="text/javascript"></script>
+<script src="http://alexgorbatchev.com/pub/sh/3.0.83/scripts/shBrushXml.js" type="text/javascript"></script>
+<script src="http://alexgorbatchev.com/pub/sh/3.0.83/scripts/shBrushJScript.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+<div id="cef-root"></div> 
+
+<h2>Instructions</h2>
+
+<p>Ajoutez ce code dans le <code>&lt;head&gt;&lt;/head&gt;</code> :</p>
+<pre class="brush: html, auto-links:false">
+&lt;script src=&quot;http://www.google.com/jsapi&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+</pre>
+
+<p>Ajoutez ensuite ce code juste après la balise <code>&lt;body&gt;</code></p>
+
+<pre class="brush: html, auto-links:false">
+&lt;!-- CEF API --&gt;&#x2028;
+&lt;div id=&#x27;cef-root&#x27;&gt;&lt;/div&gt;&#x2028;
+&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt; &#x2028;
+(function() {&#x2028;
+var e = document.createElement(&#x27;script&#x27;); e.async = true;&#x2028;
+e.src = &#x27;http://recherche.catholique.fr/api/{{ navbar.code }}.js&#x27;;&#x2028;
+document.getElementById(&#x27;cef-root&#x27;).appendChild(e);&#x2028;
+}());&#x2028;
+&lt;/script&gt;
+</pre>
+
+<p>Le chargement du script a lieu en mode asynchrone, ce qui ne bloque pas le chargement du reste de la page. C&rsquo;est la raison pour laquelle le code est plac&eacute; imm&eacute;diatement apr&egrave;s la balise &lt;body&gt;.</p>
+<p>Il est possible de configurer des options, par exemple :</p>
+
+<pre class="brush: html, auto-links:false">
+&lt;!-- CEF API --&gt;&#x2028;
+&lt;div id=&#x27;cef-root&#x27;&gt;&lt;/div&gt;&#x2028;
+&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt; &#x2028;
+window.cefAsyncInit = function() {&#x2028;
+    CEF.initNavigationBar({site_search: true, share_links: true, add_top_margin: false, with_animation: true, scrolling_bar: true});&#x2028;
+};&#x2028;
+(function() {&#x2028;
+var e = document.createElement(&#x27;script&#x27;); e.async = true;&#x2028;
+e.src = &#x27;http://recherche.catholique.fr/api/{{ navbar.code }}.js&#x27;;&#x2028;
+document.getElementById(&#x27;cef-root&#x27;).appendChild(e);&#x2028;
+}());&#x2028;
+&lt;/script&gt;
+</pre>
+
+<p>Pour ajouter un champ de recherche dans n'importe quel endroit de la page web :</p>
+<pre class="brush: html, auto-links:false">
+		&lt;form action=&quot;http://recherche.catholique.fr/&quot; method=&quot;get&quot; id=&quot;search_form&quot;&gt;
+			&lt;input type=&quot;text&quot; name=&quot;q&quot; title=&quot;Taper ici votre requ&ecirc;te&quot; id=&quot;site_search_bis&quot; /&gt;
+			&lt;input type=&quot;submit&quot; value=&quot;Rechercher&quot; title=&quot;Lancer la recherche&quot; /&gt;
+		&lt;/form&gt;
+		&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+			jQuery(&quot;#search_form&quot;).submit(function(){
+				var query = jQuery(&quot;#site_search_bis&quot;).attr(&quot;value&quot;);
+				CEF.search(query);
+				return false;
+			});
+		&lt;/script&gt;
+</pre>
+
+<script type="text/javascript">
+     SyntaxHighlighter.all()
+</script>
+
+<a href="/admin/" >Retour au menu principal</a>
+
+{% endblock %}

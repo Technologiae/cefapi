@@ -44,7 +44,7 @@ eglise_universelle:
 - url: http://www.vatican.va/holy_father/benedict_xvi/index_fr.htm
   name: "Textes de Benoît XVI"
   
-conferences:
+autres:
 - url: http://www.comece.org/
   name: COMECE
 - url: http://www.corref.fr/

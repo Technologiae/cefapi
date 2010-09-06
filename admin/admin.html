@@ -1,5 +1,65 @@
 {% extends "admin_layout.html" %}
 
 {% block content %}
-<a href="/admin/newsLinks">Liens d'actualité</a>
+
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				$("table").dataTable();
+			} );
+		</script>
+
+<h2>Liste des barres de navigation</h2>
+<table id="navbars" cellpadding="5" cellspacing="0" border="0">
+	<thead>
+	<tr><th>Nom</th><th>Code</th><th>Premier Menu</th><th>Deuxième Menu</th><th>Action</th></tr>
+	</thead>
+	<tbody>
+	{% for navbar in navbars %}
+	<tr>
+		<td>{{ navbar.name|escape }}</td>
+		<td>{{ navbar.code|escape }}.js</td>
+		<td><a href="/admin/menus/{{ navbar.first_menu.key }}">{{ navbar.first_menu.name|escape }}</a></td>
+		<td><a href="/admin/menus/{{ navbar.second_menu.key }}">{{ navbar.second_menu.name|escape }}</a></td>
+		<td>
+			<a href="/admin/navbars/{{ navbar.key }}">D&eacute;tails/Modifier</a> | 
+			{% if not menu.special_kind %}<a class="DELETE" href="/admin/navbars/{{ navbar.key }}">Supprimer</a>{% endif %}
+		</td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+
+
+<p>
+	Nouvelle barre de navigation:
+	<form action="/admin/navbars/" method="post" accept-charset="utf-8">
+		Nom : <input type="text" name="name"> ; Code : <input type="text" name="code" />
+		<input type="submit" value="Créer" />
+	</form>
+</p>
+
+<h2>Liste des menus</h2>
+<table id="menus" cellpadding="5" cellspacing="0" border="0">
+	<thead>
+	<tr><th>Nom</th><th>Type special ?</th><th>Action</th></tr>
+	</thead>
+	<tbody>
+	{% for menu in menus %}
+	<tr>
+		<td><a href="/admin/menus/{{ menu.key }}">{{ menu.name|escape }}</a></td>
+		<td>{% if menu.special_kind %}"{{menu.special_kind}}"{% else %}--{% endif %}</td>
+		<td><a class="DELETE" href="/admin/menus/{{ menu.key }}">Supprimer</a></td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+<script type="text/javascript" charset="utf-8">
+	$("a.DELETE").click(function() {
+        $.ajax({ type: "DELETE", url: $(this).attr("href"), success: function(message){ alert(message); window.location = ""; }});
+		return false;
+	});
+</script>
+
 {% endblock %}

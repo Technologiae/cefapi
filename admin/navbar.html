@@ -1,0 +1,68 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}Barre de navigation "{{ navbar.name }}"{% endblock %}
+
+{% block content %}
+<div id="cef-root"></div> 
+		
+		<script type="text/javascript" charset="utf-8"> 
+		window.cefAsyncInit = function() {
+		    CEF.initNavigationBar({
+				site_search: false
+			});
+		};
+		(function() {
+		var e = document.createElement('script'); e.async = true;
+		e.src = '/api/{{navbar.code}}.js?random={{random}}';
+		document.getElementById('cef-root').appendChild(e);
+		}());
+		</script>
+
+<p>URL : <a href="http://recherche.catholique.fr/api/{{navbar.code}}.js">http://recherche.catholique.fr/api/{{navbar.code}}.js</a></p>
+
+<form id="navbar_put_form" action="/admin/navbars/{{ navbar.key }}" method="post">
+	<input type="hidden" name="method" value="put" />
+	<p>Premier menu :
+		<select name="first_menu" id="first_menu_select" size="1">
+			<option value="None">-- aucun --</option>
+			{% for menu in menus_list %}
+			<option value="{{menu.key}}" {% ifequal navbar.first_menu.key menu.key %}selected="selected"{% endifequal %}>{{menu.name|escape}}</option>
+			{% endfor %}
+		</select>
+		(<a href="/admin/menus/{{ navbar.first_menu.key }}">Modifier le menu {{ navbar.first_menu.name|escape }}</a>)
+		<p>
+</p>
+	</p>
+	<p>Deuxième menu : 
+		<select name="second_menu" id="second_menu_select" size="1">
+			<option value="None">-- aucun --</option>
+			{% for menu in menus_list %}
+			<option value="{{menu.key}}" {% ifequal navbar.second_menu.key menu.key %}selected="selected"{% endifequal %}>{{menu.name|escape}}</option>
+			{% endfor %}
+		</select>
+		(<a href="/admin/menus/{{ navbar.second_menu.key }}">Modifier le menu {{ navbar.second_menu.name|escape }}</a>)
+	</p>
+	
+	<p><input type="submit" value="Valider les modifications &rarr;" /></p>
+</form>
+
+Nouveau menu (1):
+	<form action="/admin/menus/" method="post" accept-charset="utf-8">
+		<input type="text" name="name" />
+		<input type="hidden" name="navbar_first_key" value="{{ navbar.key }}" />
+		<input type="submit" value="Créer" />
+	</form>
+
+Nouveau menu (2):
+	<form action="/admin/menus/" method="post" accept-charset="utf-8">
+		<input type="text" name="name" />
+		<input type="hidden" name="navbar_second_key" value="{{ navbar.key }}" />
+		<input type="submit" value="Créer" />
+	</form>
+
+<p><a href="/admin/navbars/{{ navbar.key }}/instructions" >Instructions pour l&#x27;installation de cette barre</a></p>
+
+<p><a href="/admin/" >Retour au menu principal</a></p>
+
+
+{% endblock %}

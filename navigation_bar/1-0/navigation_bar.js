@@ -137,7 +137,7 @@ CEF.settings = {
 
 CEF.settings.google_search_restriction_label = "Pages de " + CEF.settings.google_search_restriction;
 
-CEF.navigationBarHtml = "{{navigation_bar_template}}";
+CEF.navigationBarHtml = "{{navbar_template}}";
 CEF.searchResultsHtmlTemplate = "{{search_results_template}}";
 
 // Function utilitaire

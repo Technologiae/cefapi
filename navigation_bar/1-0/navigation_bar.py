@@ -6,50 +6,59 @@ from cefbase import *
 import jsmin
 jsm = jsmin.JavascriptMinify()
 
-class NavigationBar(webapp.RequestHandler):
-	def get(self):
+class NavbarScript(webapp.RequestHandler):
+	def get(self, code):
 		if 'Host' in self.request.headers.keys():
 			host = self.request.headers['Host']
 		else:
 			raise NameError('MissingHost')
 		
-		js_response = memcache.get(NEW_VALUE_WHEN_DEPLOYED + "_js_response")
+		js_response = memcache.get(NEW_VALUE_WHEN_DEPLOYED + "_js_response_" + code)
 		if host == "localhost:8080": js_response = None
 		
 		if js_response is None:
-
-			js_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.js')
-			navigation_bar_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.html')
-			search_results_template_path = os.path.join(os.path.dirname(__file__), 'search_results.html')
-
-			f = open(os.path.join(os.path.dirname(__file__), 'nav_links.yaml'))
-			nav_links = yaml.load(f)
-			f.close()			
+			navbar = Navbar.all().filter("code =", code)[0]
 			
-			catholiquefr_actu = []
-			for link in NewsLink.all().order('order').fetch(15):
-				catholiquefr_actu.append({'name': link.name, 'url': link.url})
+			settings = {
+				'dioceses_menu_off': False,
+				'acces_direct_menu_off': False,
+				'ressources_menu_off': False,
+				'host': host
+			}
 			
-			nav_links['catholiquefr_actu'] = catholiquefr_actu
+			nav_links = {
+				'cef': Menu.all().filter("special_kind =", "cef").fetch(1)[0].link_set,
+				'liturgie': Menu.all().filter("special_kind =", "liturgie").fetch(1)[0].link_set,
+				'autres': Menu.all().filter("special_kind =", "autres").fetch(1)[0].link_set,
+				'messes': Menu.all().filter("special_kind =", "messes").fetch(1)[0].link_set,
+				'eglise_universelle': Menu.all().filter("special_kind =", "eglise_universelle").fetch(1)[0].link_set,
+				'annuaire_des_sites': Menu.all().filter("special_kind =", "annuaire_des_sites").fetch(1)[0].link_set,
+				'dioceses': Menu.all().filter("special_kind =", "dioceses").fetch(1)[0].link_set,
+			}
 			
 			def html_entities(x): return escape(x).encode("ascii", "xmlcharrefreplace")
 			
 			# Escaping name of links (using html entites)
 			for key, category in nav_links.items():
 				for link in category:
-					link['name'] = html_entities(link['name'])
+					link.name = html_entities(link.name)
 			
-			navigation_bar_template_values = {
-				'nav_links' : nav_links,
-				'host': host
-			}
+			settings['nav_links'] = nav_links
+			settings['first_menu'] = navbar.first_menu
+			if settings['first_menu']: settings['first_menu_links'] = navbar.first_menu.link_set
+			settings['second_menu'] = navbar.second_menu
+			if settings['second_menu']: settings['second_menu_links'] = navbar.second_menu.link_set
+			
+			js_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.js')
+			navbar_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.html')
+			search_results_template_path = os.path.join(os.path.dirname(__file__), 'search_results.html')
 			
 			# Rendering and escaping html template
-			navigation_bar_template = template.render(navigation_bar_template_path, navigation_bar_template_values).replace('\n', '').replace('\t', '').replace('\"', '\\\"')
+			navbar_template = template.render(navbar_template_path, settings).replace('\n', '').replace('\t', '').replace('\"', '\\\"')
 			search_results_template = template.render(search_results_template_path, {}).replace('\n', '').replace('\t', '').replace('\"', '\\\"')
 
 			js_template_values = {
-				'navigation_bar_template': navigation_bar_template,
+				'navbar_template': navbar_template,
 				'search_results_template': search_results_template,
 				'host': host
 			}
@@ -62,7 +71,7 @@ class NavigationBar(webapp.RequestHandler):
 			js_response = output.getvalue()
 			
 			# Memcache added (will change on next deployment)
-			memcache.add(key=NEW_VALUE_WHEN_DEPLOYED + "_js_response", value=js_response, time=86400)
+			memcache.add(key=NEW_VALUE_WHEN_DEPLOYED + "_js_response_" + code, value=js_response, time=86400)
 		
 		self.response.headers['Content-Type'] = 'text/javascript; charset=UTF-8'
 		self.response.headers['Cache-Control'] = 'private, max-age=3600, must-revalidate'
@@ -70,8 +79,8 @@ class NavigationBar(webapp.RequestHandler):
 		self.response.out.write(js_response)		
 
 application = webapp.WSGIApplication(
-									 [('/api/cef.js', NavigationBar)],
-									 debug=False)
+									 [(r'/api/(.+)\.js', NavbarScript)],
+									 debug=True)
 
 def main():
 	run_wsgi_app(application)

@@ -14,12 +14,26 @@ from django.utils.html import escape
 
 NEW_VALUE_WHEN_DEPLOYED = os.environ['CURRENT_VERSION_ID']
 
-class NewsLink(db.Model):
+class Menu(db.Model):
 	name = db.StringProperty(required=True)
+	date = db.DateTimeProperty(auto_now_add=True)
+	special_kind =  db.StringProperty()
 	author = db.UserProperty()
+
+class Link(db.Model):
+	name = db.StringProperty(required=True)
+	menu = db.ReferenceProperty(Menu)
 	date = db.DateTimeProperty(auto_now_add=True)
 	url = db.LinkProperty(required=True)
 	order = db.IntegerProperty(required=True)
+
+class Navbar(db.Model):
+	code = db.StringProperty(required=True) # should be lowercase (will be the script filename)
+	name = db.StringProperty(required=True)
+	date = db.DateTimeProperty(auto_now_add=True)
+	first_menu = db.ReferenceProperty(Menu, collection_name="navbar_first_set")
+	second_menu = db.ReferenceProperty(Menu, collection_name="navbar_second_set")
+	settings = db.StringListProperty()
 
 class Diocese(db.Model):
 	name = db.StringProperty(required=True)

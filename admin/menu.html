@@ -6,7 +6,8 @@
 
 <style type="text/css">
 	#sortable { list-style-type: none; margin: 0; padding: 0; width: 600px; }
-	#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 14px; height: 18px; }
+	#sortable li { margin: 0 3px 3px 3px; padding: 0.2em; padding-left: 1.5em; font-size: 12px; height: 22px; }
+	#sortable li a.link_url { font-size: 10px; }
 	#sortable li span { position: absolute; margin-left: -1.3em; }
 	#sortable li a.DELETE { position: absolute; left: 650px; margin-left: -1.3em; }
 	</style>
@@ -17,7 +18,7 @@
 			if (array!=[]) {
 				var listOrder = $.map(array, function (a) { return (a.split("-"))[1]; }).toString();
 			 	console.log(listOrder); 
-				$.ajax({ type: "GET", data: {'order': listOrder},  url: "/admin/newsLinks/reorder", success: function(){ window.location = ""; }});
+				$.ajax({ type: "GET", data: {'order': listOrder},  url: "/admin/menus/{{ menu_key }}/reorder", success: function(){ window.location = ""; }});
 			};
 			}});
 		return false;
@@ -26,17 +27,19 @@
 	</script>
 <p>(Faites glisser pour modifier l&#x27;ordre)</p>
 	<ul id="sortable">
-{% for newsLink in newsLinks %}
-		<li class="ui-state-default" id="newsLink-{{ newsLink.order }}">
+{% for link in links %}
+		<li class="ui-state-default" id="link-{{ link.order }}">
 			<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-			{{ newsLink.name|escape }} : <a href="{{ newsLink.url }}">{{ newsLink.url|escape }}</a>
-			<a href="/admin/newsLinks/{{ newsLink.key|escape }}" class="DELETE">Supprimer</a>
+			{{ link.name|escape }}
+			<a href="/admin/menus/{{ menu_key }}/links/{{ link.key|escape }}" class="DELETE">Supprimer</a>
+			<br /><a class="link_url" href="{{ link.url }}">{{ link.url|escape }}</a>
+			
 		</li>
 {% endfor %}
 	</ul>
 
 <h3>Ajouter un lien:</h3>
-<form action="newsLinks" method="post">
+<form action="/admin/menus/{{ menu_key }}/links/" method="post">
 	<p>
 		<label for="name">Nom:</label><input type="text" name="name" value="" id="name" />
 		<label for="url">URL:</label><input type="text" name="url" value="" id="url" />
@@ -44,7 +47,13 @@
 	</p>
 </form>
 
-<a href="/admin/" >Retour au menu</a>
+<p>
+	N.B.: Ce menu est utilisé par les barres de navigation:
+	{% for navbar in navbar_first_set %}<a href="/admin/navbars/{{ navbar.key }}">{{ navbar.name|escape }} ({{ navbar.code|escape }}.js)</a>{% endfor %}
+	{% for navbar in navbar_second_set %}<a href="/admin/navbars/{{ navbar.key }}">{{ navbar.name|escape }} ({{ navbar.code|escape }}.js)</a>{% endfor %}
+</p>
+
+<a href="/admin/" >Retour au menu principal</a>
 
 <script type="text/javascript" charset="utf-8">
 	$("a.DELETE").click(function() {

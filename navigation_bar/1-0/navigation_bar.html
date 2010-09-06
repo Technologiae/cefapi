@@ -18,26 +18,32 @@
 		<input type='submit' id='site_search_submit' value='&nbsp;' />
 		</form>
 	</div>
-	
 	<div id='cef_navigation_links_left' class='cef_navigation_links'>
-		<a href='#'>eglise.catholique.fr <small>&#x25BC;</small></a>
-		<div class='cef_nav_menu '>
+		{% if first_menu %}
+		<a href='#'>{{ first_menu.name }} <small>&#x25BC;</small></a>
+		<div class='cef_nav_menu cef_nav_menu_small'>
 			<div>
-				<a href="http://www.eglise.catholique.fr/">Page d&#x27;accueil</a><br><br>
-				<h3>Rubriques</h3>
-				<ul>{% for link in nav_links.catholiquefr %}
-					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
-				{% endfor %}</ul>
-			</div>
-			<div>
-				<h3>Dossiers d&#x27;actualit&eacute;s</h3>
-				<ul>{% for link in nav_links.catholiquefr_actu %}
+				<ul>{% for link in first_menu_links %}
 					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
 				{% endfor %}</ul>
 			</div>
 			<div class='clear'></div>
 		</div>
 		 | 
+		{% endif %}
+		{% if second_menu %}
+		<a href='#'>{{ second_menu.name }} <small>&#x25BC;</small></a>
+		<div class='cef_nav_menu cef_nav_menu_small'>
+			<div>
+				<ul>{% for link in second_menu_links %}
+					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+				{% endfor %}</ul>
+			</div>
+			<div class='clear'></div>
+		</div>
+		 | 
+		{% endif %}
+		{% if not dioceses_menu_off %}
 		<a href='#'>dioc&egrave;ses <small>&#x25BC;</small></a>
 		<div class='cef_nav_menu cef_nav_menu_small'>
 			<div>
@@ -56,6 +62,8 @@
 			<div class='clear'></div>
 		</div>
 		 | 
+		{% endif %}
+		{% if not ressources_menu_off %}
 		<a href='#'>ressources <small>&#x25BC;</small></a>
 		<div class='cef_nav_menu'>
 			<div>
@@ -85,6 +93,8 @@
 			<div class='clear'></div>
 		</div>
 		 | 
+		{% endif %}
+		{% if not acces_direct_menu_off %}
 		<a id='cef_menu_sites_link' href='#'>acc&egrave;s direct sites <small>&#x25BC;</small></a>
 		<div class='cef_nav_menu' id='cef_menu_sites'>
 			<div>
@@ -99,12 +109,13 @@
 					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
 				{% endfor %}</ul>
 				<h3>Autres</h3>
-				<ul>{% for link in nav_links.conferences %}
+				<ul>{% for link in nav_links.autres %}
 					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
 				{% endfor %}</ul>
 			</div>
 			<div class='clear'></div>
 		</div>
+		{% endif %}
 	</div>			
 </div>
 {% endspaceless %}

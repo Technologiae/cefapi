@@ -9,3 +9,18 @@ indexes:
 # manually, move them above the marker line.  The index.yaml file is
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
+
+- kind: Link
+  properties:
+  - name: menu
+  - name: order
+
+- kind: Link
+  properties:
+  - name: name
+  - name: order
+
+- kind: Menu
+  properties:
+  - name: special_kind
+  - name: name

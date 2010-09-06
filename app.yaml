@@ -13,7 +13,16 @@ handlers:
   
 - url: /api/.*
   script: navigation_bar/1-0/navigation_bar.py
-  
+
+- url: /admin/import
+  script: admin/import/import.py
+
+- url: /admin/menus/.*
+  script: admin/admin.py
+
+- url: /admin/navbars/.*
+  script: admin/navbar.py
+
 - url: /admin/.*
   script: admin/admin.py
   login: admin
@@ -27,6 +36,9 @@ handlers:
 
 - url: /stylesheets
   static_dir: stylesheets
+  
+- url: /javascripts
+  static_dir: javascripts
   
 - url: /img
   static_dir: img

@@ -2,32 +2,23 @@
 <html>
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<title>Interface d'administration</title>
+	<title>Admin</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/javascripts/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
+	
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
 	<style type="text/css" media="screen">
-	@import "../stylesheets/jquery-ui-1.8.4.css";
+	@import "/stylesheets/jquery-ui-1.8.4.css";
+	@import "/stylesheets/data_table.css";
 		body {
 			margin-top: 30px;
 			font: 12px "Trebuchet MS", Verdana, sans-serif;
 		}
 	</style>
+	{% block head_end %}{% endblock %}
 </head>
 <body>
-		<div id="cef-root"></div> 
 		
-		<script type="text/javascript" charset="utf-8"> 
-		window.cefAsyncInit = function() {
-		    CEF.initNavigationBar({
-				site_search: false
-			});
-		};
-		(function() {
-		var e = document.createElement('script'); e.async = true;
-		e.src = '/api/cef.js';
-		document.getElementById('cef-root').appendChild(e);
-		}());
-		</script>
 	<h1>Interface d'administration</h1>
 	<h2>{% block title %}{% endblock %}</h2>
 	{% block content %}{% endblock %}
