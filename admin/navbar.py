@@ -20,22 +20,34 @@ class NavbarPage(webapp.RequestHandler):
 		self.response.out.write(template.render(path, template_values))
 	
 	def post(self, navbar_key):
-		if self.request.get('method') == "put": self.put(navbar_key); return # pour palier a l'absence de la methode PUT des formulaires HTML, on utilise POST
+		if self.request.get('method') == "put":
+			self.put(navbar_key)  # pour palier a l'absence de la methode PUT des formulaires HTML, on utilise POST
+			return
+		else:
+			self.error(404) # file not found
+			return
 	
 	def put(self, navbar_key):
 		navbar = Navbar.get(navbar_key)
+
+		if self.request.get('name') and self.request.get('code'):
+			navbar.name = self.request.get('name')
+			navbar.code = self.request.get('code')
+		elif self.request.get('first_menu') and self.request.get('second_menu'):
+			if self.request.get('first_menu') == "None":
+				navbar.first_menu = None
+			else:
+				navbar.first_menu = Menu.get(self.request.get('first_menu'))
 		
-		if self.request.get('first_menu') == "None":
-			navbar.first_menu = None
+			if self.request.get('second_menu') == "None":
+				navbar.second_menu = None
+			else:
+				navbar.second_menu = Menu.get(self.request.get('second_menu'))
+		
+			navbar.settings = self.request.get('settings', allow_multiple = True)
 		else:
-			navbar.first_menu = Menu.get(self.request.get('first_menu'))
-		
-		if self.request.get('second_menu') == "None":
-			navbar.second_menu = None
-		else:
-			navbar.second_menu = Menu.get(self.request.get('second_menu'))
-		
-		navbar.settings = self.request.get('settings', allow_multiple = True)
+			self.error(404) # file not found
+			return
 		
 		navbar.put()
 		memcache.flush_all()

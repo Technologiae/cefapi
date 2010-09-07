@@ -15,17 +15,17 @@
 <h2>Liste des barres de navigation</h2>
 <table id="navbars" cellpadding="5" cellspacing="0" border="0">
 	<thead>
-	<tr><th>Nom</th><th>Code</th><th>Menus</th><th>Action</th></tr>
+	<tr><th>Nom</th><th>URL</th><th>Menus</th><th>Action</th></tr>
 	</thead>
 	<tbody>
 	{% for navbar in navbars %}
 	<tr>
 		<td>{{ navbar.name|escape }}</td>
-		<td>{{ navbar.code|escape }}.js</td>
+		<td><code>/api/{{ navbar.code|escape }}.js</code></td>
 		<td>
 			<ul>
-				{% if navbar.first_menu %}<li><a href="/admin/menus/{{ navbar.first_menu.key }}">{{ navbar.first_menu.name|escape }}</a></li>{% endif %}
-				{% if navbar.second_menu %}<li><a href="/admin/menus/{{ navbar.second_menu.key }}">{{ navbar.second_menu.name|escape }}</a></li>{% endif %}
+				{% if navbar.first_menu %}<li>{{ navbar.first_menu.name|escape }}</li>{% endif %}
+				{% if navbar.second_menu %}<li>{{ navbar.second_menu.name|escape }}</li>{% endif %}
 			</ul>
 			
 		</td>
@@ -47,6 +47,7 @@
 		Nom : <input type="text" name="name">
 		Code : <input type="text" name="code" />
 		<input type="submit" value="Créer" />
+		<p><strong>Exemple</strong> (Nom) = <i>Service National des Vocations</i> ; (Code) = <i>cef-snv</i> (pas de majuscules, accents ni espaces...)</p>
 	</form>
 </fieldset>
 
@@ -60,8 +61,10 @@
 	<tr>
 		<td>{{ menu.name|escape }}</td>
 		<td>
-			{% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
-			{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %}
+			<ul>
+				{% for navbar in menu.navbar_first_set %}<li>{{ navbar.name }}</li> {% endfor %}
+				{% for navbar in menu.navbar_second_set %}<li>{{ navbar.name }}</li> {% endfor %}
+			</ul>			
 		</td>
 		<td>{% if menu.special_kind %}"{{menu.special_kind}}"{% else %}--{% endif %}</td>
 		<td>

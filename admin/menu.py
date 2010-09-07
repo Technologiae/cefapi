@@ -9,13 +9,22 @@ class MenuPage(webapp.RequestHandler):
 			'links': links,
 			'navbar_first_set': menu.navbar_first_set,
 			'navbar_second_set': menu.navbar_second_set,
-			'title': "Menu \""+menu.name+"\"",
-			'menu_key': menu_key
+			'menu': menu,
 		}
 
 		path = os.path.join(os.path.dirname(__file__), 'templates/menu.html')
 		self.response.out.write(template.render(path, template_values))
+	
+	def put(self, menu_key):
+		menu = Menu.get(menu_key)
+		menu.name = self.request.get('name')
+		menu.put()
+		self.redirect('/admin/menus/'+menu_key)	
 
+	def post(self, menu_key):	
+		if self.request.get('method') == 'put':
+			self.put(menu_key)
+	
 	def delete(self, menu_key):
 		menu = Menu.get(menu_key)
 		if len(menu.navbar_first_set.fetch(1))>0 or len(menu.navbar_second_set.fetch(1))>0:

@@ -4,13 +4,11 @@
 
 {% block content %}
 
-<form action="" method="get" accept-charset="utf-8">
-	
-
-	<p><input type="submit" value="Continue &rarr;"></p>
+<form action="/admin/menus/{{ menu_key }}/links/{{ link.key }}" method="post" accept-charset="utf-8">
+	<input type="hidden" name="method" value="put">
+	<p><input type="text" size="70" name="name" value="{{link.name}}"></p>
+	<p><input type="text" size="70" name="url" value="{{link.url}}"></p>
+	<p><input type="submit" value="Valider et retourner au menu"></p>
 </form>
-
-<a href="/admin/" >Retour au menu principal</a>
-
 
 {% endblock %}

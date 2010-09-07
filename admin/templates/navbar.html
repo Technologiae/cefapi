@@ -63,7 +63,8 @@ $(function() {
 });
 </script>
 
-<p>URL : <a href="http://{{host}}/api/{{navbar.code}}.js">http://{{host}}/api/{{navbar.code}}.js</a></p>
+<h3>Contenu de cette barre</h3>
+
 
 <div id="new_navbar_first_dialog" title="Cr&eacute;er un nouveau menu">
 	<form action="/admin/menus/" method="post" accept-charset="utf-8">
@@ -78,6 +79,7 @@ $(function() {
 		<input type="hidden" name="navbar_second_key" value="{{ navbar.key }}" />
 	</form>
 </div>
+
 
 <form id="navbar_put_form" action="/admin/navbars/{{ navbar.key }}" method="post">
 	<input type="hidden" name="method" value="put" />
@@ -126,7 +128,19 @@ $(function() {
 	</p> -->
 </form>
 
-<p><a href="/admin/navbars/{{ navbar.key }}/instructions" >Instructions pour l&#x27;installation de cette barre</a></p>
+<h3>Instructions</h3>
+
+<p><a href="/admin/navbars/{{ navbar.key }}/instructions" >Instructions pour l&#x27;installation de la barre "{{ navbar.name }}"</a></p>
+
+<h3>Nom et code de cette barre</h3>
+
+<form action="/admin/navbars/{{ navbar.key }}" method="post">
+	<input type="hidden" name="method" value="put" />
+	<p>Nom : <input type="text" size="35" name="name" value="{{ navbar.name }}" />
+		Code : <input type="text" size="10" name="code" value="{{ navbar.code }}" />
+		<input type="submit" value="Modifier" /></p>
+		<p>Attention ! Ne modifiez pas le code si la barre a d&eacute;j&agrave; &eacute;t&eacute; install&eacute;e sur des sites !</p>
+</form>
 
 <p><a href="/admin/" >Retour au menu principal</a></p>
 

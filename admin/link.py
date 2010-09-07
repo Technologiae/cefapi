@@ -1,6 +1,6 @@
 from cefbase import *
 
-class MenuReorder(webapp.RequestHandler):
+class LinksReorderTask(webapp.RequestHandler):
 	def get(self, menu_key):
 		order = map(int, self.request.get('order').split(","))
 		menu = Menu.get(menu_key)
@@ -11,28 +11,46 @@ class MenuReorder(webapp.RequestHandler):
 
 		db.put(links)
 		memcache.flush_all()
-		
-class LinkPage(webapp.RequestHandler):
-	def post(self, menu_key, key):
+
+class LinksPage(webapp.RequestHandler):
+	def post(self, menu_key):
 		menu = Menu.get(menu_key)
 		links = sorted(menu.link_set, key=lambda link: link.order)
 		if len(links) > 0:
 			new_position = max(map(lambda x: x.order, links)) + 1
 		else:
 			new_position = 0
-		
+	
 		link = Link(
 			name = self.request.get('name'),
 			url = self.request.get('url'),
 			order = new_position
 		)
-		
+	
 		link.menu = menu.key()
-		
+	
 		link.put()	
 		memcache.flush_all()
-			
-		self.redirect('/admin/menus/'+menu_key)		
+		
+		self.redirect('/admin/menus/'+menu_key)	
+		
+class LinkPage(webapp.RequestHandler):
+	def get(self, menu_key, link_key):
+		link = Link.get(link_key)
+		
+		path = os.path.join(os.path.dirname(__file__), 'templates/link.html')
+		self.response.out.write(template.render(path, { 'title': "Editer le lien", 'menu_key': menu_key, 'link': link }))
+		
+	def put(self, menu_key, link_key):
+		link = Link.get(link_key)
+		link.name = self.request.get('name')
+		link.url = self.request.get('url')
+		link.put()
+		self.redirect('/admin/menus/'+menu_key)	
+
+	def post(self, menu_key, link_key):	
+		if self.request.get('method') == 'put':
+			self.put(menu_key, link_key)
 	
 	def delete(self, menu_key, key):
 		menu = Menu.get(menu_key)
