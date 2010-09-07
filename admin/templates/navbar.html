@@ -29,7 +29,7 @@ $(function() {
 		modal: true,
 		buttons: {
 			'Valider': function() {
-				$("#new_navbar_first_dialog").submit();
+				$("#new_navbar_first_dialog form").submit();
 				$(this).dialog('close');
 			},
 			'Annuler': function() {
@@ -45,7 +45,7 @@ $(function() {
 		modal: true,
 		buttons: {
 			'Valider': function() {
-				$("#new_navbar_second_dialog").submit();
+				$("#new_navbar_second_dialog form").submit();
 				$(this).dialog('close');
 			},
 			'Annuler': function() {

@@ -38,7 +38,7 @@ document.getElementById(&#x27;cef-root&#x27;).appendChild(e);&#x2028;
 <p>Le chargement du script a lieu en mode asynchrone, ce qui ne bloque pas le chargement du reste de la page. C&rsquo;est la raison pour laquelle le code est plac&eacute; imm&eacute;diatement apr&egrave;s la balise &lt;body&gt;.</p>
 <p>Il est possible de configurer des options, par exemple :</p>
 
-<pre class="brush: html, auto-links:false">
+<pre class="brush: html, auto-links:false, collapse:true">
 &lt;!-- CEF API --&gt;&#x2028;
 &lt;div id=&#x27;cef-root&#x27;&gt;&lt;/div&gt;&#x2028;
 &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt; &#x2028;
@@ -54,7 +54,7 @@ document.getElementById(&#x27;cef-root&#x27;).appendChild(e);&#x2028;
 </pre>
 
 <p>Pour ajouter un champ de recherche dans n'importe quel endroit de la page web :</p>
-<pre class="brush: html, auto-links:false">
+<pre class="brush: html, auto-links:false, collapse:true">
 		&lt;form action=&quot;http://recherche.catholique.fr/&quot; method=&quot;get&quot; id=&quot;search_form&quot;&gt;
 			&lt;input type=&quot;text&quot; name=&quot;q&quot; title=&quot;Taper ici votre requ&ecirc;te&quot; id=&quot;site_search_bis&quot; /&gt;
 			&lt;input type=&quot;submit&quot; value=&quot;Rechercher&quot; title=&quot;Lancer la recherche&quot; /&gt;
@@ -67,6 +67,16 @@ document.getElementById(&#x27;cef-root&#x27;).appendChild(e);&#x2028;
 			});
 		&lt;/script&gt;
 </pre>
+
+<h3>Les méthodes précédentes ne marchent pas ?</h3>
+<p>Ignorer toutes les instructions ci-dessus, et ajoutez dans le head :</p>
+<pre class="brush: html, auto-links:false">
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://{{host}}/api/{{navbar.code}}.js" type="text/javascript" charset="utf-8"></script>
+</pre>
+<p>C'est tout !</p>
+
 
 <p>N.B.: L'URL de cette barre est <a href="http://{{host}}/api/{{navbar.code}}.js">http://{{host}}/api/{{navbar.code}}.js</a></p>
 

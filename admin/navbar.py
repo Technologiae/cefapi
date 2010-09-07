@@ -12,7 +12,6 @@ class NavbarPage(webapp.RequestHandler):
 			'navbar': navbar,
 			'random': random.randint(0,10000000000),
 			'menus_list': menus_list,
-			'host': self.request.headers['Host']
 		}
 
 		path = os.path.join(os.path.dirname(__file__), 'templates/navbar.html')
@@ -66,7 +65,7 @@ class NavbarInstructionsPage(webapp.RequestHandler):
 	def get(self, navbar_key):
 		navbar = Navbar.get(navbar_key)
 		path = os.path.join(os.path.dirname(__file__), 'templates/navbar_instructions.html')
-		self.response.out.write(template.render(path, {'navbar': navbar, 'title': 'instructions'}))
+		self.response.out.write(template.render(path, {'navbar': navbar, 'title': 'instructions', 'host': self.request.headers['Host']}))
 
 class NavbarsPage(webapp.RequestHandler):
 	def get(self):
