@@ -1,6 +1,7 @@
 /* @override 
 	http://localhost:8080/stylesheets/navigation_bar.1-0.css
 	http://recherche.catholique.fr/stylesheets/site_search.1-0-2.css
+	http://recherche.catholique.fr/stylesheets/navigation_bar.1-0-2.css
 */
 
 /* Reset div */
@@ -165,12 +166,12 @@ span#cef_navigation_title {
 	font-size: 100%;
 	font-family: inherit;
 	vertical-align: baseline;
-	list-style-position: inside;
 	list-style-type: disc;
+	list-style-position: inside;
 }
 
 #cef_navigation .cef_nav_menu ul li {
-	display: block;
+	display: list-item;
 }
 
 #cef_navigation .cef_nav_menu div {

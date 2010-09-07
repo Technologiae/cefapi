@@ -29,15 +29,17 @@ class NavbarScript(webapp.RequestHandler):
 						
 			template_vars.update(dict((setting,True) for setting in navbar.settings))
 			
+			# sorted(menu.link_set, key=lambda link: link.order)
+			
 			try:
 				nav_links = {
-					'cef': Menu.all().filter("special_kind =", "cef").fetch(1)[0].link_set,
-					'liturgie': Menu.all().filter("special_kind =", "liturgie").fetch(1)[0].link_set,
-					'autres': Menu.all().filter("special_kind =", "autres").fetch(1)[0].link_set,
-					'messes': Menu.all().filter("special_kind =", "messes").fetch(1)[0].link_set,
-					'eglise_universelle': Menu.all().filter("special_kind =", "eglise_universelle").fetch(1)[0].link_set,
-					'annuaire_des_sites': Menu.all().filter("special_kind =", "annuaire_des_sites").fetch(1)[0].link_set,
-					'dioceses': Menu.all().filter("special_kind =", "dioceses").fetch(1)[0].link_set,
+					'cef': sorted(Menu.all().filter("special_kind =", "cef").fetch(1)[0].link_set, key=lambda link: link.order),
+					'liturgie': sorted(Menu.all().filter("special_kind =", "liturgie").fetch(1)[0].link_set, key=lambda link: link.order),
+					'autres': sorted(Menu.all().filter("special_kind =", "autres").fetch(1)[0].link_set, key=lambda link: link.order),
+					'messes': sorted(Menu.all().filter("special_kind =", "messes").fetch(1)[0].link_set, key=lambda link: link.order),
+					'eglise_universelle': sorted(Menu.all().filter("special_kind =", "eglise_universelle").fetch(1)[0].link_set, key=lambda link: link.order),
+					'annuaire_des_sites': sorted(Menu.all().filter("special_kind =", "annuaire_des_sites").fetch(1)[0].link_set, key=lambda link: link.order),
+					'dioceses': sorted(Menu.all().filter("special_kind =", "dioceses").fetch(1)[0].link_set, key=lambda link: link.order),
 				}
 			except IndexError:
 				raise NameError('Un des menus speciaux est manquant en base de donnees... Avez vous initialise les menus ?')		
@@ -51,9 +53,9 @@ class NavbarScript(webapp.RequestHandler):
 			
 			template_vars['nav_links'] = nav_links
 			template_vars['first_menu'] = navbar.first_menu
-			if template_vars['first_menu']: template_vars['first_menu_links'] = navbar.first_menu.link_set
+			if template_vars['first_menu']: template_vars['first_menu_links'] = sorted(navbar.first_menu.link_set, key=lambda link: link.order)
 			template_vars['second_menu'] = navbar.second_menu
-			if template_vars['second_menu']: template_vars['second_menu_links'] = navbar.second_menu.link_set
+			if template_vars['second_menu']: template_vars['second_menu_links'] = sorted(navbar.second_menu.link_set, key=lambda link: link.order)
 			
 			js_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.js')
 			navbar_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.html')

@@ -17,7 +17,6 @@
 			var array = $(this).sortable('toArray');
 			if (array!=[]) {
 				var listOrder = $.map(array, function (a) { return (a.split("-"))[1]; }).toString();
-			 	console.log(listOrder); 
 				$.ajax({ type: "GET", data: {'order': listOrder},  url: "/admin/menus/{{ menu_key }}/reorder", success: function(){ window.location = ""; }});
 			};
 			}});

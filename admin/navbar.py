@@ -38,7 +38,8 @@ class NavbarPage(webapp.RequestHandler):
 		navbar.settings = self.request.get('settings', allow_multiple = True)
 		
 		navbar.put()
-		
+		memcache.flush_all()
+
 		self.redirect("")
 	
 	def delete(self, navbar_key):
