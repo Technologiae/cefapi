@@ -9,8 +9,8 @@
 	#sortable li { margin: 0 3px 3px 3px; padding: 0.2em; padding-left: 1.5em; font-size: 12px; height: 22px; }
 	#sortable li a.link_url { font-size: 10px; }
 	#sortable li span { position: absolute; margin-left: -1.3em; }
-	#sortable li a.DELETE { position: absolute; left: 650px; margin-left: -1.3em; }
-	</style>
+	#sortable li a.DELETE { position: absolute; left: 720px; margin-left: -1.3em; }
+	#sortable li a.EDIT { position: absolute; left: 650px; margin-left: -1.3em; }	</style>
 	<script type="text/javascript">
 	$(function() {
 		$("#sortable").sortable({update: function(event, ui) {
@@ -30,12 +30,20 @@
 		<li class="ui-state-default" id="link-{{ link.order }}">
 			<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
 			{{ link.name|escape }}
-			<a href="/admin/menus/{{ menu_key }}/links/{{ link.key|escape }}" class="DELETE">Supprimer</a>
+			<a href="/admin/menus/{{ menu_key }}/links/{{ link.key|escape }}/edit" class="button_link EDIT">Modifier</a>
+			<a href="/admin/menus/{{ menu_key }}/links/{{ link.key|escape }}" class="button_link DELETE">Supprimer</a>
 			<br /><a class="link_url" href="{{ link.url }}">{{ link.url|escape }}</a>
 			
 		</li>
 {% endfor %}
 	</ul>
+
+<script type="text/javascript" charset="utf-8">
+	$("a.DELETE").click(function() {
+        $.ajax({ type: "DELETE", url: $(this).attr("href"), success: function(){ window.location = ""; }});
+		return false;
+	});
+</script>
 
 <h3>Ajouter un lien:</h3>
 <form action="/admin/menus/{{ menu_key }}/links/" method="post">
@@ -58,11 +66,5 @@
 
 <a href="/admin/" >Retour au menu principal</a>
 
-<script type="text/javascript" charset="utf-8">
-	$("a.DELETE").click(function() {
-        $.ajax({ type: "DELETE", url: $(this).attr("href"), success: function(){ window.location = ""; }});
-		return false;
-	});
-</script>
 
 {% endblock %}

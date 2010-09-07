@@ -17,13 +17,7 @@ handlers:
 - url: /admin/import
   script: admin/import/import.py
 
-- url: /admin/menus/.*
-  script: admin/admin.py
-
-- url: /admin/navbars/.*
-  script: admin/navbar.py
-
-- url: /admin/.*
+- url: /admin.*
   script: admin/admin.py
   login: admin
   

@@ -15,7 +15,7 @@ class NavbarPage(webapp.RequestHandler):
 			'host': self.request.headers['Host']
 		}
 
-		path = os.path.join(os.path.dirname(__file__), 'navbar.html')
+		path = os.path.join(os.path.dirname(__file__), 'templates/navbar.html')
 		
 		self.response.out.write(template.render(path, template_values))
 	
@@ -53,7 +53,7 @@ class NavbarPage(webapp.RequestHandler):
 class NavbarInstructionsPage(webapp.RequestHandler):
 	def get(self, navbar_key):
 		navbar = Navbar.get(navbar_key)
-		path = os.path.join(os.path.dirname(__file__), 'navbar_instructions.html')
+		path = os.path.join(os.path.dirname(__file__), 'templates/navbar_instructions.html')
 		self.response.out.write(template.render(path, {'navbar': navbar, 'title': 'instructions'}))
 
 class NavbarsPage(webapp.RequestHandler):
@@ -67,16 +67,3 @@ class NavbarsPage(webapp.RequestHandler):
 		
 		memcache.flush_all()
 		self.redirect("/admin/navbars/%s" % navbar)
-		                            
-		
-application = webapp.WSGIApplication(
-									 [(r'/admin/navbars/(.+)/instructions', NavbarInstructionsPage),
-									  (r'/admin/navbars/(.+)', NavbarPage),
-									  ('/admin/navbars/', NavbarsPage)],
-									 debug=True)
-
-def main():
-	run_wsgi_app(application)
-
-if __name__ == "__main__":
-	main()

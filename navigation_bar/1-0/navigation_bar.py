@@ -28,9 +28,7 @@ class NavbarScript(webapp.RequestHandler):
 			}
 						
 			template_vars.update(dict((setting,True) for setting in navbar.settings))
-			
-			# sorted(menu.link_set, key=lambda link: link.order)
-			
+						
 			try:
 				nav_links = {
 					'cef': sorted(Menu.all().filter("special_kind =", "cef").fetch(1)[0].link_set, key=lambda link: link.order),
