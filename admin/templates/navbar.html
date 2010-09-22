@@ -8,8 +8,8 @@
 <script type="text/javascript" charset="utf-8"> 
 window.cefAsyncInit = function() {
     CEF.initNavigationBar({
-		site_search: false
-	});
+        site_search: false
+    });
 };
 (function() {
 var e = document.createElement('script'); e.async = true;
@@ -95,7 +95,7 @@ $(function() {
 			{% endfor %}
 		</select>
 		<a class="button_link" href="/admin/menus/{{ navbar.first_menu.key }}">Modifier ce menu</a>
-		<button id="new_navbar_first_button">Nouveau menu</button>
+		<a href="" id="new_navbar_first_button">Nouveau menu</a>
 	</p>
 	<p>Deuxième menu : 
 		<select name="second_menu" id="second_menu_select" size="1">
@@ -109,7 +109,7 @@ $(function() {
 			{% endfor %}
 		</select>
 		<a class="button_link" href="/admin/menus/{{ navbar.second_menu.key }}">Modifier ce menu</a>
-		<button id="new_navbar_second_button">Nouveau menu</button>
+		<a href="" id="new_navbar_second_button">Nouveau menu</a>
 	</p>
 	{{ settings }}
 
@@ -120,13 +120,40 @@ $(function() {
 		<input type="checkbox" name="settings" value="social_links_off" {% for set in navbar.settings %}{% ifequal set "social_links_off" %}checked="checked"{% endifequal %}{%endfor%} />Désactiver les liens de partage<br />
 	</p>
 	
-	<!-- <p>
-		Moteur de recherche :<br />
-		<input type="radio" name="search_form" value="this_site" id="this_site_input"><label for="this_site_input">Rechercher dans le site courant</label><br />
-		<input type="radio" name="search_form" value="recherche.catholique.fr" id="catholiquefr_input"><label for="catholiquefr_input">Rechercher dans eglise.catholique.fr</label><br />
-		<input type="radio" name="search_form" value="other" id="other_search_input"><label for="other_search_input">Rechercher avec un autre moteur</label><br />
-	</p> -->
+	<h4>Moteur de recherche</h4>
+	<p class="search_engine_radio_buttons">
+		<input type="radio" name="cse_unique_id" value="this_site" id="this_site_input" 
+			{% if not navbar.cse_unique_id %}checked="checked"{% endif %}>
+		<label for="this_site_input">Rechercher dans le site courant</label><br />
+		<input type="radio" name="cse_unique_id" value="recherche.catholique.fr" id="catholiquefr_input"
+			{% ifequal navbar.cse_unique_id "recherche.catholique.fr" %}checked="checked"{% endifequal %}>
+		<label for="catholiquefr_input">Rechercher sur le site "recherche.catholique.fr"</label>
+	</p>
+	<p class="search_engine_radio_buttons">
+		Rechercher dans un moteur de recherche personnalis&eacute;e :<br />
+		<span style="color: red;">(N.B.: les moteurs list&eacute;s ci-dessous sont ceux cr&eacute;&eacute;s avec le compte eglise.catholique.france@gmail.com<br /> Pour les modifier, il faut &ecirc;tre loggu&eacute; avec ce compte)</span><br />
+		{% for searchengine in searchengines %}
+		<input type="radio" name="cse_unique_id" value="{{searchengine.cse_unique_id}}" {% ifequal navbar.cse_unique_id searchengine.cse_unique_id %}checked="checked"{% endifequal %}><label>"{{searchengine.title}}" (<code>{{searchengine.cse_id}}</code>)</label> (<a href="http://www.google.com/cse/panel/sites?cx={{searchengine.cse_unique_id}}">Modifier ce moteur</a>)<br />
+		{% endfor %}
+		<input type="radio" id="cse_unique_id_other_radio" name="cse_unique_id"  disabled="disabled" value="other"><label> Autre...</label> 
+		<input type="text" id="cse_unique_id_other" name="cse_unique_id_other" value="{% if navbar.cse_unique_id %}{{ navbar.cse_unique_id }}{% endif %}" size=50 /><input type="submit" value="OK"><br />
+		(indiquer le code unique, par exemple: <code>002848703620547974985:uqc3tjf5wbs</code>,<br /> ou bien le domaine d'un site, par exemple <code>lefigaro.fr</code>)
+	</p>
 </form>
+
+<p><a href="http://www.google.com/cse/manage/create">Créer un nouveau moteur</a> (Il faut être loggué avec le compte eglise.catholique.france@gmail.com, n'oubliez pas de <a href="http://www.google.com/support/customsearch/bin/answer.py?hl=fr&answer=70354">désactiver les publicités</a>)</p>
+
+<script type="text/javascript" charset="utf-8">
+	if ($("p.search_engine_radio_buttons input[checked='checked']").length == 0) {
+		$("#cse_unique_id_other_radio").attr("checked", "checked");
+	};
+	
+	$("#cse_unique_id_other").focus(function(){
+		$("p#search_engine_radio_buttons input").removeAttr("checked");
+		$("#cse_unique_id_other_radio").removeAttr("disabled");
+		$("#cse_unique_id_other_radio").attr("checked", "checked");
+	});
+</script>
 
 <h3>Instructions</h3>
 

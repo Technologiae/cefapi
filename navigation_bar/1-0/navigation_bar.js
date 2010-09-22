@@ -127,9 +127,9 @@ var api_host = "{{host}}";
 window.CEF = {};
 
 CEF.settings = {
-	site_search: true,
+	site_search: {% ifequal navbar.cse_unique_id "recherche.catholique.fr" %}false{% else %}true{% endifequal %},
 	share_links: true,
-	google_search_restriction: location.host,
+	google_search_restriction: {% if not navbar.cse_unique_id %}location.host{% else %}"{{ navbar.cse_unique_id }}"{% endif %},
 	scrolling_bar: true,
 	image_search_results: true,
 	news_search_results: true

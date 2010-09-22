@@ -1,4 +1,4 @@
-from cefbase import *
+from admin_classes import *
 import random
 
 class NavbarPage(webapp.RequestHandler):
@@ -7,9 +7,14 @@ class NavbarPage(webapp.RequestHandler):
 		menus = Menu.all().order("name").fetch(200)
 		menus = list(menu for menu in menus if menu.special_kind == None) # Supprime les menus speciaux de la liste
 		menus_list = map(lambda menu: {'name': menu.name, 'key': menu.key(), 'navbar_first_set':menu.navbar_first_set, 'navbar_second_set':menu.navbar_second_set}, menus)
-
+		
+		# Liste des moteurs de recherche disponibles
+		gdatafeed = GdataFeed("http://www.google.com/cse/api/default/cse/")
+		searchengines = map(lambda se: SearchEngineFromXml(se), gdatafeed.elements("CustomSearchEngine"))
+		
 		template_values = {
 			'navbar': navbar,
+			'searchengines': searchengines,
 			'random': random.randint(0,10000000000),
 			'menus_list': menus_list,
 		}
@@ -28,10 +33,12 @@ class NavbarPage(webapp.RequestHandler):
 	
 	def put(self, navbar_key):
 		navbar = Navbar.get(navbar_key)
-
+		
+		# Formulaire de changement de nom
 		if self.request.get('name') and self.request.get('code'):
 			navbar.name = self.request.get('name')
 			navbar.code = self.request.get('code')
+		# Formulaire pour les options
 		elif self.request.get('first_menu') and self.request.get('second_menu'):
 			if self.request.get('first_menu') == "None":
 				navbar.first_menu = None
@@ -42,7 +49,15 @@ class NavbarPage(webapp.RequestHandler):
 				navbar.second_menu = None
 			else:
 				navbar.second_menu = Menu.get(self.request.get('second_menu'))
-		
+			
+			if self.request.get('cse_unique_id') == "this_site":
+				navbar.cse_unique_id = None
+			elif self.request.get('cse_unique_id') == "other":
+				navbar.cse_unique_id = self.request.get('cse_unique_id_other')
+			else:
+				navbar.cse_unique_id = self.request.get('cse_unique_id')
+				
+			
 			navbar.settings = self.request.get('settings', allow_multiple = True)
 		else:
 			self.error(404) # file not found

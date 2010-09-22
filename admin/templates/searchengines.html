@@ -1,0 +1,53 @@
+{% extends "admin_layout.html" %}
+
+{% block content %}
+
+<code>{{response|escape}}</code>
+
+<h2>Liste des moteurs de recherche</h2>
+<table id="menus" cellpadding="5" cellspacing="0" border="0">
+	<thead>
+	<tr><th>Nom</th><th>Description</th><th>ID</th><th>Action</th></tr>
+	</thead>
+	<tbody>
+	{% for se in searchengines %}
+	<tr>
+		<td>{{ se.title|escape }}</td>
+		<td>
+			{{ se.description|escape }}	
+		</td>
+		<td>
+			{{ se.cse_id }}	
+		</td>
+		<td>
+			
+		</td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+<h2>Liste des annotations</h2>
+<table id="menus" cellpadding="5" cellspacing="0" border="0">
+	<thead>
+	<tr><th>About</th><th>Score</th><th>Label</th><th>Action</th></tr>
+	</thead>
+	<tbody>
+	{% for annotation in annotations %}
+	<tr>
+		<td>{{ annotation.about|escape }}</td>
+		<td>
+			{{ annotation.score|escape }}	
+		</td>
+		<td>
+			{{ annotation.label }}	
+		</td>
+		<td>
+			
+		</td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

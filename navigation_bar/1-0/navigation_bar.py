@@ -66,6 +66,7 @@ class NavbarScript(webapp.RequestHandler):
 			js_template_values = {
 				'navbar_template': navbar_template,
 				'search_results_template': search_results_template,
+				'navbar': navbar,
 				'host': host
 			}
 

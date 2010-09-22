@@ -16,7 +16,6 @@ from google.appengine.api import memcache
 
 from django.utils.html import escape
 
-
 NEW_VALUE_WHEN_DEPLOYED = os.environ['CURRENT_VERSION_ID']
 
 class Menu(db.Model):
@@ -39,6 +38,7 @@ class Navbar(db.Model):
 	first_menu = db.ReferenceProperty(Menu, collection_name="navbar_first_set")
 	second_menu = db.ReferenceProperty(Menu, collection_name="navbar_second_set")
 	settings = db.StringListProperty()
+	cse_unique_id = db.StringProperty()
 
 class Diocese(db.Model):
 	name = db.StringProperty(required=True)
