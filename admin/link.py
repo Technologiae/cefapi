@@ -46,6 +46,7 @@ class LinkPage(webapp.RequestHandler):
 		link.name = self.request.get('name')
 		link.url = self.request.get('url')
 		link.put()
+		memcache.flush_all()
 		self.redirect('/admin/menus/'+menu_key)	
 
 	def post(self, menu_key, link_key):	

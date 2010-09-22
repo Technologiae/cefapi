@@ -7,18 +7,22 @@ import jsmin
 jsm = jsmin.JavascriptMinify()
 
 class NavbarScript(webapp.RequestHandler):
+	# code correspond au nom du fichier .js (exemple: cef, clermont...)
 	def get(self, code):
 		if 'Host' in self.request.headers.keys():
 			host = self.request.headers['Host']
 		else:
 			raise NameError('MissingHost')
 		
+		# Systeme de cache
 		js_response = memcache.get(NEW_VALUE_WHEN_DEPLOYED + "_js_response_" + code)
+		# Le cache est desactive en local
 		if host == "localhost:8080": js_response = None
 		
 		if js_response is None:
 			navbar = Navbar.all().filter("code =", code)[0]
 			
+			# Options pour defaut
 			template_vars = {
 				'dioceses_menu_off': False,
 				'acces_direct_menu_off': False,
@@ -26,7 +30,8 @@ class NavbarScript(webapp.RequestHandler):
 				'social_links_off': False,
 				'host': host
 			}
-						
+			
+			# On met a jour les options pour que ca corresponde a l instance navbar.settings	
 			template_vars.update(dict((setting,True) for setting in navbar.settings))
 						
 			try:
@@ -42,6 +47,7 @@ class NavbarScript(webapp.RequestHandler):
 			except IndexError:
 				raise NameError('Un des menus speciaux est manquant en base de donnees... Avez vous initialise les menus ?')		
 			
+			# A cause des problemes d encodage sous internet explorer, on utilise les "html entities"
 			def html_entities(x): return escape(x).encode("ascii", "xmlcharrefreplace")
 			
 			# Escaping name of links (using html entites)

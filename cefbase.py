@@ -21,6 +21,7 @@ NEW_VALUE_WHEN_DEPLOYED = os.environ['CURRENT_VERSION_ID']
 class Menu(db.Model):
 	name = db.StringProperty(required=True)
 	date = db.DateTimeProperty(auto_now_add=True)
+	# sepcial_kind sert a identifier les menus qui servent a composer les menus speciaux (ressources, dioceses...)
 	special_kind =  db.StringProperty()
 	author = db.UserProperty()
 
@@ -38,9 +39,5 @@ class Navbar(db.Model):
 	first_menu = db.ReferenceProperty(Menu, collection_name="navbar_first_set")
 	second_menu = db.ReferenceProperty(Menu, collection_name="navbar_second_set")
 	settings = db.StringListProperty()
+	# cse: custom search engine
 	cse_unique_id = db.StringProperty()
-
-class Diocese(db.Model):
-	name = db.StringProperty(required=True)
-	owner = db.UserProperty(required=True)
-	site = db.LinkProperty()
