@@ -19,6 +19,7 @@ class MenuPage(webapp.RequestHandler):
 		menu = Menu.get(menu_key)
 		menu.name = self.request.get('name')
 		menu.put()
+		memcache.flush_all()
 		self.redirect('/admin/menus/'+menu_key)	
 
 	def post(self, menu_key):	

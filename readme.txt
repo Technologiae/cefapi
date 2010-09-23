@@ -34,6 +34,26 @@ Le dépôt de code se trouve sur le dépôt technologie (http://svn.technologiae
 Pour consulter le dépôt: http://forge.technologiae.org/projects/catholiquefr/repository
 
 
+====
+CORRECTIONS DE BUGS
+AMÉLIORATIONS POSSIBLES
+====
+
+- Prévoir un système de sauvegardes pour les moteurs de recherche
+- Liste des dossiers d'actualité: permettre l'exportation pour utilisation dans l'application iPhone (Attention: ajouter une image et une description !)
+- Installer le moteur de recherche sur le site de Soissons
+- Corriger bug IE : caractères accentués (Dans les 2 messages d'erreur)
+- BUG: (dans le site messesInfo) touche "entrée" pour lancer la recherche
+- Contacter Lyon (Jeunes) pour la barre de navigation (ils en ont fait une version spécifique).
+- BUG: http://recherche.catholique.fr/?q=gabriel&sites=dioc%E8ses ( (bug non reproduit sur safari et firefox)
+correction: si, bug reproduit sur safari en production...)
+- Ajout de l'auto-complétion?
+- Changer "debug=True" !!!
+- SPIP: problème d'affichage des boutons "Modifier rubrique" et "recalculer" avec la barre de navigation
+
+
+
+
 
 ==========
 HISTORIQUE
