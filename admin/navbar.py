@@ -33,7 +33,6 @@ class NavbarPage(webapp.RequestHandler):
 	
 	def put(self, navbar_key):
 		navbar = Navbar.get(navbar_key)
-		
 		# Formulaire de changement de nom
 		if self.request.get('name') and self.request.get('code'):
 			navbar.name = self.request.get('name')
@@ -89,7 +88,8 @@ class NavbarsPage(webapp.RequestHandler):
 	def post(self):
 		code = self.request.get('code')
 		name = self.request.get('name')
-		navbar = Navbar(name= name, code= code).put()
+		author = users.get_current_user()
+		navbar = Navbar(name= name, code= code, author= author).put()
 		
 		memcache.flush_all()
 		self.redirect("/admin/navbars/%s" % navbar)

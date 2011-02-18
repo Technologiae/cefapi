@@ -24,6 +24,19 @@
 		$("#sortable").disableSelection();
 	});
 	</script>
+<form action="/admin/menus/{{ menu.key }}" method="post">
+	<input type="hidden" name="method" value="put" />
+	
+	{% if menu.shared%}
+		<label for="shared">Ce menu est public</label>	
+		<input type="hidden" name="shared" value="false" />
+		<input type="submit" name="shared" value="Rendre privé" > 
+	{% else %}
+		<label for="shared">Ce menu est privé</label>	
+		<input type="hidden" name="shared" value="true" />
+		<input type="submit" name="shared" value="Rendre public" >
+	{% endif %}	
+</form>
 <p>(Faites glisser pour modifier l&#x27;ordre)</p>
 	<ul id="sortable">
 {% for link in links %}

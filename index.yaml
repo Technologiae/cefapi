@@ -22,5 +22,25 @@ indexes:
 
 - kind: Menu
   properties:
+  - name: author
+  - name: name
+
+- kind: Menu
+  properties:
+  - name: mail
+  - name: name
+
+- kind: Menu
+  properties:
   - name: special_kind
+  - name: name
+
+- kind: Navbar
+  properties:
+  - name: author
+  - name: name
+
+- kind: Navbar
+  properties:
+  - name: mail
   - name: name

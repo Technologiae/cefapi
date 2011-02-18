@@ -9,7 +9,7 @@ from admin.menu import *
 from admin.link import *
 from admin.searchengine import *
 from admin.admin_index import *
-		
+         
 application = webapp.WSGIApplication([
 									('/admin', AdminPage),
 									('/admin/', AdminPage),

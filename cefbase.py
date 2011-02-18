@@ -24,6 +24,7 @@ class Menu(db.Model):
 	# sepcial_kind sert a identifier les menus qui servent a composer les menus speciaux (ressources, dioceses...)
 	special_kind =  db.StringProperty()
 	author = db.UserProperty()
+	shared = db.BooleanProperty()
 
 class Link(db.Model):
 	name = db.StringProperty(required=True)
@@ -35,6 +36,7 @@ class Link(db.Model):
 class Navbar(db.Model):
 	code = db.StringProperty(required=True) # should be lowercase (will be the script filename)
 	name = db.StringProperty(required=True)
+	author = db.UserProperty()
 	date = db.DateTimeProperty(auto_now_add=True)
 	first_menu = db.ReferenceProperty(Menu, collection_name="navbar_first_set")
 	second_menu = db.ReferenceProperty(Menu, collection_name="navbar_second_set")

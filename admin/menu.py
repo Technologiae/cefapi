@@ -17,7 +17,15 @@ class MenuPage(webapp.RequestHandler):
 	
 	def put(self, menu_key):
 		menu = Menu.get(menu_key)
-		menu.name = self.request.get('name')
+		if self.request.get('name'):
+			menu.name = self.request.get('name')
+		if self.request.get('shared'):	
+			if self.request.get('shared')=="true":
+				menu.shared = True
+				menu.author = None
+			else:
+				menu.shared = False
+				menu.author = users.get_current_user()
 		menu.put()
 		memcache.flush_all()
 		self.redirect('/admin/menus/'+menu_key)	
@@ -46,10 +54,12 @@ class MenusPage(webapp.RequestHandler):
 		self.redirect("/admin/")
 		
 	def post(self):
-		name = self.request.get('name')			
-		menu = Menu(name= name)
+		name = self.request.get('name')
+		shared = self.request.get('shared')
+		author = users.get_current_user()	
+		menu = Menu(name= name, author= author)
 		menu_key= menu.put()
-		
+
 		if self.request.get('navbar_first_key'):
 			navbar = Navbar.get(self.request.get('navbar_first_key'))
 			navbar.first_menu = menu
@@ -59,6 +69,6 @@ class MenusPage(webapp.RequestHandler):
 			navbar = Navbar.get(self.request.get('navbar_second_key'))
 			navbar.second_menu = menu
 			navbar.put()
-		
+
 		memcache.flush_all()
 		self.redirect("/admin/menus/%s" % menu_key)

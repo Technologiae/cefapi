@@ -21,12 +21,12 @@ handlers:
 - url: /admin/import
   script: admin/import/import.py
   # Il est necessaire d etre admin du compte GAE
-  login: admin
+  #login: admin
 
 # Interface d admin
 - url: /admin.*
   script: admin/admin.py
-  login: admin
+  #login: admin
   
 # Dossiers statiques
 - url: /stylesheets
