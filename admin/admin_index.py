@@ -7,8 +7,8 @@ class AdminPage(webapp.RequestHandler):
 
 		if not user:
 			self.redirect(users.create_login_url(self.request.uri))
-		elif user.email() != "toto@admin.com":
-			self.redirect(users.create_login_url(self.request.uri))
+#		elif user.email() != "toto@admin.com":
+#			self.redirect(users.create_login_url(self.request.uri))
 		else:
 			url = users.create_logout_url('./')
 			url_linktext = 'Deconnexion'

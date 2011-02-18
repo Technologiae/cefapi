@@ -97,8 +97,8 @@
 		</td>
 		<td>{% if menu.special_kind %}"{{menu.special_kind}}"{% else %}--{% endif %}</td>
 		<td>
-			<!--  <a class="button_link" href="/admin/menus/{{ menu.key }}">Modifier</a> 
-			{% if not menu.special_kind %}<a class="button_link DELETE" href="/admin/menus/{{ menu.key }}">Supprimer</a>{% endif %}-->
+			<a class="button_link" href="/admin/menus/{{ menu.key }}">Modifier</a> 
+			{% if not menu.special_kind %}<a class="button_link DELETE" href="/admin/menus/{{ menu.key }}">Supprimer</a>{% endif %}
 		</td>
 	</tr>
 	{% endfor %}  
