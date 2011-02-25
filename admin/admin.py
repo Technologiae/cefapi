@@ -9,10 +9,14 @@ from admin.menu import *
 from admin.link import *
 from admin.searchengine import *
 from admin.admin_index import *
+from admin.administrator import *
+from authentification import *
          
 application = webapp.WSGIApplication([
 									('/admin', AdminPage),
 									('/admin/', AdminPage),
+                                    ('/admin/administrators', AdministratorsPage),
+                                    (r'/admin/administrators/(.+)', AdministratorsPage),
 									(r'/admin/menus/(.+)/reorder', LinksReorderTask),
 									(r'/admin/menus/(.+)/links/', LinksPage),
 									(r'/admin/menus/(.+)/links/(.+)', LinkPage),

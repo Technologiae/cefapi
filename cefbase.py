@@ -30,7 +30,7 @@ class Link(db.Model):
 	name = db.StringProperty(required=True)
 	menu = db.ReferenceProperty(Menu)
 	date = db.DateTimeProperty(auto_now_add=True)
-	url = db.LinkProperty(required=True)
+	url = db.LinkProperty()
 	order = db.IntegerProperty(required=True)
 
 class Navbar(db.Model):
@@ -43,3 +43,7 @@ class Navbar(db.Model):
 	settings = db.StringListProperty()
 	# cse: custom search engine
 	cse_unique_id = db.StringProperty()
+	
+class Administrator(db.Model):
+	user = db.UserProperty()
+	admin = db.BooleanProperty(default= False)

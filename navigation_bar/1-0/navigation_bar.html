@@ -24,7 +24,13 @@
 		<div class='cef_nav_menu cef_nav_menu_small'>
 			<div>
 				<ul>{% for link in first_menu_links %}
-					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+					{% if not link.url %}
+						</ul>
+						<h3>{{ link.name }}</h3>
+						<ul>
+					{% else %}
+						<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+					{% endif %}
 				{% endfor %}</ul>
 			</div>
 			<div class='clear'></div>
@@ -36,7 +42,13 @@
 		<div class='cef_nav_menu cef_nav_menu_small'>
 			<div>
 				<ul>{% for link in second_menu_links %}
-					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+					{% if not link.url %}
+						</ul>
+						<h3>{{ link.name }}</h3>
+						<ul>
+					{% else %}
+						<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+					{% endif %}
 				{% endfor %}</ul>
 			</div>
 			<div class='clear'></div>
@@ -48,7 +60,7 @@
 		<div class='cef_nav_menu cef_nav_menu_small'>
 			<div>
 				<ul>{% for link in nav_links.dioceses %}
-					<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+						<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
 				{% endfor %}</ul>
 				<h3>Recherche</h3>
 				<ul>

@@ -27,7 +27,18 @@ indexes:
 
 - kind: Menu
   properties:
+  - name: author
+  - name: shared
+  - name: name
+
+- kind: Menu
+  properties:
   - name: mail
+  - name: name
+
+- kind: Menu
+  properties:
+  - name: shared
   - name: name
 
 - kind: Menu

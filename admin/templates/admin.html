@@ -1,7 +1,7 @@
 {% extends "admin_layout.html" %}
 
 {% block content %}
-	<a href="{{ url }}"><b>{{ url_linktext }}</b></a>
+	<a href="{{ url }}"><b>{{ url_linktext }}</b></a>{% if user.super_admin %} | <a href="/admin/administrators"><b>Liste des contributeurs</b></a>{%endif%}
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
 				$("table").dataTable({
@@ -49,27 +49,30 @@
 	<form action="/admin/navbars/" method="post" accept-charset="utf-8">
 		Nom : <input type="text" name="name">
 		Code : <input type="text" name="code" />
-		<!--mail : <input type="text" name="mail" />-->
 		<input type="submit" value="Créer" />
 		<p><strong>Exemple</strong> (Nom) = <i>Service National des Vocations</i> ; (Code) = <i>cef/snv</i> ou <i>diocese/paris</i> (pas de majuscules, accents ni espaces...)</p>
 	</form>
 </fieldset>
 
+{% if user.admin %}
+<h2>Liste des menus personnalisés des utilisateurs</h2>
+{%else%}
 <h2>Liste de mes menus</h2>
+{%endif%}
 <table id="menus" cellpadding="5" cellspacing="0" border="0">
 	<thead>
-	<tr><th>Nom</th><th>Navbars</th><th>Auteur</th><th>Type special ?</th><th>Action</th></tr>
+	<tr><th>Nom</th><!-- <th>Navbars</th> --><th>Auteur</th><th>Type special ?</th><th>Action</th></tr>
 	</thead>
 	<tbody>
 	{% for menu in menus %}
 	<tr>
 		<td>{{ menu.name|escape }}</td>
-		<td>
+		<!--<td>
 			<ul>
 				{% for navbar in menu.navbar_first_set %}<li>{{ navbar.name }}</li> {% endfor %}
 				{% for navbar in menu.navbar_second_set %}<li>{{ navbar.name }}</li> {% endfor %}
 			</ul>			
-		</td>
+		</td>-->
 		<td>{{ menu.author|escape }}</td>
 		<td>{% if menu.special_kind %}"{{menu.special_kind}}"{% else %}--{% endif %}</td>
 		<td>
@@ -81,25 +84,27 @@
 	</tbody>
 </table>
 <h2>Liste des menus communs</h2>
-<table id="menus" cellpadding="5" cellspacing="0" border="0">
+<table id="old_menus" cellpadding="5" cellspacing="0" border="0">
 	<thead>
-	<tr><th>Nom</th><th>Navbars</th><th>Type special ?</th><th>Action</th></tr>
+	<tr><th>Nom</th><!--<th>Navbars</th>--><th>Type special ?</th>{% if user.admin %}<th>Action</th>{%endif%}</tr>
 	</thead>
 	<tbody>
-	{% for menu in old_menus %}
+	{% for menu in commun_menus %}
 	<tr>
 		<td>{{ menu.name|escape }}</td>
-		<td>
+		<!--<td>
 			<ul>
 				{% for navbar in menu.navbar_first_set %}<li>{{ navbar.name }}</li> {% endfor %}
 				{% for navbar in menu.navbar_second_set %}<li>{{ navbar.name }}</li> {% endfor %}
 			</ul>			
-		</td>
+		</td>-->
 		<td>{% if menu.special_kind %}"{{menu.special_kind}}"{% else %}--{% endif %}</td>
+		{% if user.admin %}
 		<td>
 			<a class="button_link" href="/admin/menus/{{ menu.key }}">Modifier</a> 
 			{% if not menu.special_kind %}<a class="button_link DELETE" href="/admin/menus/{{ menu.key }}">Supprimer</a>{% endif %}
 		</td>
+		{%endif%}
 	</tr>
 	{% endfor %}  
 	</tbody>
@@ -109,7 +114,6 @@
 	$("a.DELETE").click(function() {
 		if (confirm("Êtes-vous sûrs de vouloir supprimer cet élément ?")) {
 			$.ajax({ type: "DELETE", url: $(this).attr("href"), success: function(message){ alert(message); window.location = ""; }});
-
 		};
 		return false;
 	});

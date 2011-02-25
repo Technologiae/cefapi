@@ -83,28 +83,52 @@ $(function() {
 	<input type="hidden" name="method" value="put" />
 	<p>Premier menu :
 		<select name="first_menu" id="first_menu_select" size="1">
-			<option value="None">-- aucun --</option>
-			{% for menu in menus_list %}
-			<option value="{{menu.key}}" {% ifequal navbar.first_menu.key menu.key %}selected="selected"{% endifequal %}>
-				{{menu.name|escape}}
-				({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
-				{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %})
-			</option>
-			{% endfor %}
+			<optgroup label="Mes Menus">
+				<option value="None">-- aucun --</option>
+				{% for menu in menus_list %}
+				<option value="{{menu.key}}" {% ifequal navbar.first_menu.key menu.key %}selected="selected"{% endifequal %}>
+					{{menu.name|escape}}
+					({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %})
+				</option>
+				{% endfor %}
+			</optgroup>
+			<optgroup label="Menus communs">
+				<option value="None">-- aucun --</option>
+				{% for menu in commun_menus_list %}
+				<option  value="{{menu.key}}" {% ifequal navbar.first_menu.key menu.key %}selected="selected"{% endifequal %}> 
+					{{menu.name|escape}}
+					({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %})
+				</option>
+				{% endfor %}
+			</optgroup>
 		</select>
 		<a class="button_link" href="/admin/menus/{{ navbar.first_menu.key }}">Modifier ce menu</a>
 		<a href="" id="new_navbar_first_button">Nouveau menu</a>
 	</p>
 	<p>Deuxième menu : 
 		<select name="second_menu" id="second_menu_select" size="1">
-			<option value="None">-- aucun --</option>
-			{% for menu in menus_list %}
-			<option value="{{menu.key}}" {% ifequal navbar.second_menu.key menu.key %}selected="selected"{% endifequal %}>
-				{{menu.name|escape}}
-				({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
-				{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %})
-			</option>
-			{% endfor %}
+			<optgroup label="Mes Menus">
+				<option value="None">-- aucun --</option>
+				{% for menu in menus_list %}
+				<option value="{{menu.key}}" {% ifequal navbar.second_menu.key menu.key %}selected="selected"{% endifequal %}>
+					{{menu.name|escape}}
+					({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %})
+				</option>
+				{% endfor %}
+			</optgroup>
+			<optgroup label="Menus communs">
+				<option value="None">-- aucun --</option>
+				{% for menu in commun_menus_list %}
+				<option  value="{{menu.key}}" {% ifequal navbar.second_menu.key menu.key %}selected="selected"{% endifequal %}> 
+					{{menu.name|escape}}
+					({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %})
+				</option>
+				{% endfor %}
+			</optgroup>
 		</select>
 		<a class="button_link" href="/admin/menus/{{ navbar.second_menu.key }}">Modifier ce menu</a>
 		<a href="" id="new_navbar_second_button">Nouveau menu</a>

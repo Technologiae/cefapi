@@ -1,0 +1,29 @@
+{% extends "admin_layout.html" %}
+{% block title %}Gestion des contributeurs{% endblock %}
+
+{% block content %}
+
+<ul>
+{% for administrator in administrators %}
+<li>
+{{administrator.user.email}} {%if administrator.admin%} | <i>admin</i> {%endif%}<a href="/admin/administrators/{{administrator.key}}" class="DELETE button_link">Supprimer</a>	
+</li>
+{% endfor %}
+</ul>
+
+<h3>Ajouter un contributeur:</h3>
+<form action="/admin/administrators" method="post">
+	<p>
+		<label for="name">Email:</label><input size="35" type="text" name="email" value="" id="email" />
+		<label for="admin">admin:</label><input type="checkbox" name="admin" value="admin" id="admin" />
+		<input type="submit" value="Ajouter">
+	</p>
+</form>
+<a href="/admin"><b>Retour au menu principal</b></a>
+<script type="text/javascript" charset="utf-8">
+	$("a.DELETE").click(function() {
+        $.ajax({ type: "DELETE", url: $(this).attr("href"), success: function(message){ alert(message); window.location = ""; }});
+		return false;
+	});
+</script>
+{% endblock %}
