@@ -1,4 +1,5 @@
 #Interface d'accueil de la page d'admin
+# permet de selectionner les donnees qu'on envoie selon l'utilisateur 
  
 from cefbase import *
 from google.appengine.api import users
@@ -7,15 +8,14 @@ from authentification import *
 class AdminPage(webapp.RequestHandler):
 	def get(self):
 		user = Authentification.check_authentification()
-		user.super_admin=users.is_current_user_admin()
+# on regarde aussi si l'utilisateur est admin app engine		
 		url = users.create_logout_url('./')
 		url_linktext = 'Deconnexion'
 		if not user:
-			self.redirect(users.create_login_url(self.request.uri))
-		# ici test@admin.com est considere comme le super administrateur		
+			self.redirect(users.create_login_url(self.request.uri))	
 		else:
 			if user.admin:
-				#Le super admin voit toutes les barres de navigation et tous les menus
+				#L'option admin permet de voire toutes les barres de navigation et tous les menus de tous les contributeurs
 				navbars = Navbar.all().order('name').fetch(200)
 				menus = Menu.all().order('name').fetch(200)
 	 			old_menus = Menu.all().filter("author =", None).filter("shared =", False).order('name').fetch(200)
@@ -23,9 +23,9 @@ class AdminPage(webapp.RequestHandler):
 				
 			else:
 				#Si l'utilisateur est un admin de dioceses:
-				#Il ne voit que les barres de menu qu'ils ont creees
+				#Il ne voit que les barres de menu qu'il a creees
 				navbars = Navbar.all().filter("author =",user.user).order('name').fetch(200)
-				#Il voit tous les menus qu'il a crees et tous ceux qui ont ete declares commun par le super admin
+				#Il voit tous les menus qu'il a crees et tous ceux qui ont ete declares commun par un admin
 				menus = Menu.all().filter("author =",user.user).order('name').fetch(200)
 		 		old_menus = Menu.all().filter("author =", None).filter("shared =", False).order('name').fetch(200)
 		 		shared_menus = Menu.all().filter("shared =", True).order('name').fetch(200)

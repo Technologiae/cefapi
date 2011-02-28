@@ -1,3 +1,5 @@
+# Ajout dans l'objet Menu d'un champ 'shared' et d'un champ 'author' 
+# Ajout de l'objet Administrator
 import cgi
 import os
 import yaml

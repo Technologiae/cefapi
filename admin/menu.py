@@ -1,4 +1,5 @@
 # le constructeur de la classe Menu se trouve dans le fichier cefbase.py (dans la racine du projet)
+# le constructeur de la classe Authentification se trouve dans le fichier authentification.py (dans la racine du projet)
 from cefbase import *
 from authentification import *
 from cefbase import *

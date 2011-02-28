@@ -47,9 +47,6 @@ class ImportTask(webapp.RequestHandler):
 		cef_navbar.second_menu = menu_actus
 		cef_navbar.put()
 		
-		Administrator(user = User("test@admin.com"), admin = True).put()
-		Administrator(user = User("toto@admin.com"), admin = False).put()
-		
 		memcache.flush_all()
 	
 		self.redirect('/admin/')		

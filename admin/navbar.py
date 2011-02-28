@@ -1,4 +1,5 @@
 # le constructeur de la classe Navbar se trouve dans le fichier cefbase.py (dans la racine du projet)
+# le constructeur de la classe Authentification se trouve dans le fichier authentification.py (dans la racine du projet)
 from admin_classes import *
 from authentification import *
 import random
