@@ -1,6 +1,7 @@
 {% extends "admin_layout.html" %}
 
 {% block content %}
+	<p> Bienvenue {{ user.user|escape }}</p>
 	<a href="{{ url }}"><b>{{ url_linktext }}</b></a>{% if user.super_admin %} | <a href="/admin/administrators"><b>Liste des contributeurs</b></a>{%endif%}
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
