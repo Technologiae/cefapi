@@ -22,6 +22,12 @@ handlers:
   script: admin/import/import.py
   # Il est necessaire d etre admin du compte GAE
   login: admin
+# Script d importation initiale (menus et barre de nav CEF)
+- url: /admin/correct
+  script: admin/import/correct.py
+  # Il est necessaire d etre admin du compte GAE
+  login: admin
+
 
 # Interface d admin
 - url: /admin.*
