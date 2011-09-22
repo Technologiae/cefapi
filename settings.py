@@ -1,1 +1,1 @@
-CSE_PASSWORD = "breteuil2008"
+CSE_PASSWORD = "breteuil2010"
