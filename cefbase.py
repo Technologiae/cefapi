@@ -42,6 +42,8 @@ class Navbar(db.Model):
 	date = db.DateTimeProperty(auto_now_add=True)
 	first_menu = db.ReferenceProperty(Menu, collection_name="navbar_first_set")
 	second_menu = db.ReferenceProperty(Menu, collection_name="navbar_second_set")
+	third_menu = db.ReferenceProperty(Menu, collection_name="navbar_third_set")
+	fourth_menu = db.ReferenceProperty(Menu, collection_name="navbar_fourth_set")
 	settings = db.StringListProperty()
 	# cse: custom search engine
 	cse_unique_id = db.StringProperty()
