@@ -22,6 +22,7 @@ class NavbarPage(webapp.RequestHandler):
 			
 			# Liste des moteurs de recherche disponibles
 			gdatafeed = GdataFeed("http://www.google.com/cse/api/default/cse/")
+			self.response.out.write(gdatafeed)
 			searchengines = map(lambda se: SearchEngineFromXml(se), gdatafeed.elements("CustomSearchEngine"))
 			
 			template_values = {

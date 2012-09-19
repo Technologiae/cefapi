@@ -48,7 +48,7 @@ class SearchEngineFromXml():
 		self.creator = se_xml.attributes['creator'].value
 		self.cse_id = se_xml.attributes['id'].value
 		self.cse_unique_id = "%s:%s" % (self.creator, self.cse_id)
-		self.description = se_xml.attributes['description'].value
+		self.description = ""#se_xml.attributes['description'].value
 		self.filter_label_name = "_cse_%s" % self.cse_id # C'est une convention ! Mais attention, rien n'empeche que ce soit different
 
 # <?xml version="1.0" encoding="UTF-8" ?>
