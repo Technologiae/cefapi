@@ -15,11 +15,6 @@ indexes:
   - name: menu
   - name: order
 
-- kind: Link
-  properties:
-  - name: name
-  - name: order
-
 - kind: Menu
   properties:
   - name: author

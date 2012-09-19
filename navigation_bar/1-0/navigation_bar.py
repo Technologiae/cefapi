@@ -56,10 +56,18 @@ class NavbarScript(webapp.RequestHandler):
 					link.name = html_entities(link.name)
 			
 			template_vars['nav_links'] = nav_links
+			
 			template_vars['first_menu'] = navbar.first_menu
 			if template_vars['first_menu']: template_vars['first_menu_links'] = sorted(navbar.first_menu.link_set, key=lambda link: link.order)
+			
 			template_vars['second_menu'] = navbar.second_menu
 			if template_vars['second_menu']: template_vars['second_menu_links'] = sorted(navbar.second_menu.link_set, key=lambda link: link.order)
+			
+			template_vars['third_menu'] = navbar.third_menu
+			if template_vars['third_menu']: template_vars['third_menu_links'] = sorted(navbar.third_menu.link_set, key=lambda link: link.order)
+			
+			template_vars['fourth_menu'] = navbar.fourth_menu
+			if template_vars['fourth_menu']: template_vars['fourth_menu_links'] = sorted(navbar.fourth_menu.link_set, key=lambda link: link.order)
 			
 			js_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.js')
 			navbar_template_path = os.path.join(os.path.dirname(__file__), 'navigation_bar.html')

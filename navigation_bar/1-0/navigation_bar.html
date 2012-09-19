@@ -55,6 +55,42 @@
 		</div>
 		 | 
 		{% endif %}
+		{% if third_menu %}
+		<a href='#'>{{ third_menu.name }} <small>&#x25BC;</small></a>
+		<div class='cef_nav_menu cef_nav_menu_small'>
+			<div>
+				<ul>{% for link in third_menu_links %}
+					{% if not link.url %}
+						</ul>
+						<h3>{{ link.name }}</h3>
+						<ul>
+					{% else %}
+						<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+					{% endif %}
+				{% endfor %}</ul>
+			</div>
+			<div class='clear'></div>
+		</div>
+		 | 
+		{% endif %}
+		{% if fourth_menu %}
+		<a href='#'>{{ fourth_menu.name }} <small>&#x25BC;</small></a>
+		<div class='cef_nav_menu cef_nav_menu_small'>
+			<div>
+				<ul>{% for link in fourth_menu_links %}
+					{% if not link.url %}
+						</ul>
+						<h3>{{ link.name }}</h3>
+						<ul>
+					{% else %}
+						<li><a href='{{ link.url }}'>{{ link.name }}</a></li>
+					{% endif %}
+				{% endfor %}</ul>
+			</div>
+			<div class='clear'></div>
+		</div>
+		 | 
+		{% endif %}		
 		{% if not dioceses_menu_off %}
 		<a href='#'>dioc&egrave;ses <small>&#x25BC;</small></a>
 		<div class='cef_nav_menu cef_nav_menu_small'>

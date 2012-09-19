@@ -51,12 +51,50 @@ $(function() {
 			}
 		}
 	});
+		
+	$("#new_navbar_third_dialog").dialog({
+		autoOpen: false,
+		height: 200,
+		width: 200,
+		modal: true,
+		buttons: {
+			'Valider': function() {
+				$("#new_navbar_third_dialog form").submit();
+				$(this).dialog('close');
+			},
+			'Annuler': function() {
+				$(this).dialog('close');
+			}
+		}
+	});
+		
+	$("#new_navbar_fourth_dialog").dialog({
+		autoOpen: false,
+		height: 200,
+		width: 200,
+		modal: true,
+		buttons: {
+			'Valider': function() {
+				$("#new_navbar_fourth_dialog form").submit();
+				$(this).dialog('close');
+			},
+			'Annuler': function() {
+				$(this).dialog('close');
+			}
+		}
+	});
 			
 	$('#new_navbar_first_button').button().click(function() {
 		$('#new_navbar_first_dialog').dialog('open'); return false;
 	});
 	$('#new_navbar_second_button').button().click(function() {
 		$('#new_navbar_second_dialog').dialog('open'); return false;
+	});
+	$('#new_navbar_third_button').button().click(function() {
+		$('#new_navbar_third_dialog').dialog('open'); return false;
+	});
+	$('#new_navbar_fourth_button').button().click(function() {
+		$('#new_navbar_fourth_dialog').dialog('open'); return false;
 	});
 });
 </script>
@@ -78,6 +116,19 @@ $(function() {
 	</form>
 </div>
 
+<div id="new_navbar_third_dialog" title="Cr&eacute;er un nouveau menu">
+	<form action="/admin/menus/" method="post" accept-charset="utf-8">
+		Nom de ce menu : <input type="text" name="name" />
+		<input type="hidden" name="navbar_third_key" value="{{ navbar.key }}" />
+	</form>
+</div>
+
+<div id="new_navbar_fourth_dialog" title="Cr&eacute;er un nouveau menu">
+	<form action="/admin/menus/" method="post" accept-charset="utf-8">
+		Nom de ce menu : <input type="text" name="name" />
+		<input type="hidden" name="navbar_fourth_key" value="{{ navbar.key }}" />
+	</form>
+</div>
 
 <form id="navbar_put_form" action="/admin/navbars/{{ navbar.key }}" method="post">
 	<input type="hidden" name="method" value="put" />
@@ -89,7 +140,9 @@ $(function() {
 				<option value="{{menu.key}}" {% ifequal navbar.first_menu.key menu.key %}selected="selected"{% endifequal %}>
 					{{menu.name|escape}}
 					({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
-					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %})
+					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_third_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_fourth_set %}{{ navbar.name }} {% endfor %})
 				</option>
 				{% endfor %}
 			</optgroup>
@@ -99,7 +152,9 @@ $(function() {
 				<option  value="{{menu.key}}" {% ifequal navbar.first_menu.key menu.key %}selected="selected"{% endifequal %}> 
 					{{menu.name|escape}}
 					({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
-					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %})
+					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_third_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_fourth_set %}{{ navbar.name }} {% endfor %})
 				</option>
 				{% endfor %}
 			</optgroup>
@@ -115,7 +170,9 @@ $(function() {
 				<option value="{{menu.key}}" {% ifequal navbar.second_menu.key menu.key %}selected="selected"{% endifequal %}>
 					{{menu.name|escape}}
 					({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
-					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %})
+					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_third_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_fourth_set %}{{ navbar.name }} {% endfor %})
 				</option>
 				{% endfor %}
 			</optgroup>
@@ -125,13 +182,75 @@ $(function() {
 				<option  value="{{menu.key}}" {% ifequal navbar.second_menu.key menu.key %}selected="selected"{% endifequal %}> 
 					{{menu.name|escape}}
 					({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
-					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %})
+					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_third_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_fourth_set %}{{ navbar.name }} {% endfor %})
 				</option>
 				{% endfor %}
 			</optgroup>
 		</select>
 		<a class="button_link" href="/admin/menus/{{ navbar.second_menu.key }}">Modifier ce menu</a>
 		<a href="" id="new_navbar_second_button">Nouveau menu</a>
+	</p>
+	<p>Troisième menu : 
+		<select name="third_menu" id="third_menu_select" size="1">
+			<optgroup label="Mes Menus">
+				<option value="None">-- aucun --</option>
+				{% for menu in menus_list %}
+				<option value="{{menu.key}}" {% ifequal navbar.third_menu.key menu.key %}selected="selected"{% endifequal %}>
+					{{menu.name|escape}}
+					({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_third_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_fourth_set %}{{ navbar.name }} {% endfor %})
+				</option>
+				{% endfor %}
+			</optgroup>
+			<optgroup label="Menus communs">
+				<option value="None">-- aucun --</option>
+				{% for menu in commun_menus_list %}
+				<option  value="{{menu.key}}" {% ifequal navbar.third_menu.key menu.key %}selected="selected"{% endifequal %}> 
+					{{menu.name|escape}}
+					({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_third_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_fourth_set %}{{ navbar.name }} {% endfor %})
+				</option>
+				{% endfor %}
+			</optgroup>
+		</select>
+		<a class="button_link" href="/admin/menus/{{ navbar.third_menu.key }}">Modifier ce menu</a>
+		<a href="" id="new_navbar_third_button">Nouveau menu</a>
+	</p>
+	<p>Quatrième menu : 
+		<select name="fourth_menu" id="fourth_menu_select" size="1">
+			<optgroup label="Mes Menus">
+				<option value="None">-- aucun --</option>
+				{% for menu in menus_list %}
+				<option value="{{menu.key}}" {% ifequal navbar.fourth_menu.key menu.key %}selected="selected"{% endifequal %}>
+					{{menu.name|escape}}
+					({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_third_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_fourth_set %}{{ navbar.name }} {% endfor %})
+				</option>
+				{% endfor %}
+			</optgroup>
+			<optgroup label="Menus communs">
+				<option value="None">-- aucun --</option>
+				{% for menu in commun_menus_list %}
+				<option  value="{{menu.key}}" {% ifequal navbar.fourth_menu.key menu.key %}selected="selected"{% endifequal %}> 
+					{{menu.name|escape}}
+					({% for navbar in menu.navbar_first_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_second_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_third_set %}{{ navbar.name }} {% endfor %}
+					{% for navbar in menu.navbar_fourth_set %}{{ navbar.name }} {% endfor %})
+				</option>
+				{% endfor %}
+			</optgroup>
+		</select>
+		<a class="button_link" href="/admin/menus/{{ navbar.fourth_menu.key }}">Modifier ce menu</a>
+		<a href="" id="new_navbar_fourth_button">Nouveau menu</a>
 	</p>
 	{{ settings }}
 

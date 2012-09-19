@@ -6,7 +6,7 @@
 
 <style type="text/css">
 	#sortable { list-style-type: none; margin: 0; padding: 0; width: 600px; }
-	#sortable li { margin: 0 3px 3px 3px; padding: 0.2em; padding-left: 1.5em; font-size: 12px; height: 22px; }
+	#sortable li { margin: 0 3px 3px 3px; padding: 0.2em; padding-left: 1.5em; font-size: 12px; height: 35px; }
 	#sortable li a { font-size: 10px; }
 	#sortable li span { position: absolute; margin-left: -1.3em; }
 	#sortable li a.DELETE { font-size: 12px; position: absolute; left: 720px; margin-left: -1.3em; }
@@ -82,8 +82,14 @@
 <h3>Menus qui utilisent cette barre de navigation :</h3>
 <p>
 	<ul>
+		<li>Premier menu</li>
 		{% for navbar in navbar_first_set %}<li><a href="/admin/navbars/{{ navbar.key }}">{{ navbar.name|escape }} ({{ navbar.code|escape }}.js)</a></li>{% endfor %}
+		<li>Deuxième menu</li>
 		{% for navbar in navbar_second_set %}<li><a href="/admin/navbars/{{ navbar.key }}">{{ navbar.name|escape }} ({{ navbar.code|escape }}.js)</a></li>{% endfor %}
+		<li>Toisième menu</li>
+		{% for navbar in navbar_third_set %}<li><a href="/admin/navbars/{{ navbar.key }}">{{ navbar.name|escape }} ({{ navbar.code|escape }}.js)</a></li>{% endfor %}
+		<li>Quatrième menu</li>
+		{% for navbar in navbar_fourth_set %}<li><a href="/admin/navbars/{{ navbar.key }}">{{ navbar.name|escape }} ({{ navbar.code|escape }}.js)</a></li>{% endfor %}
 	</ul>
 </p>
 

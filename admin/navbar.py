@@ -15,7 +15,7 @@ class NavbarPage(webapp.RequestHandler):
 			navbar = Navbar.get(navbar_key)
 			menus = Menu.all().filter("author =",user.user).order("name").fetch(200)
 			menus = list(menu for menu in menus if menu.special_kind == None) # Supprime les menus speciaux de la liste
-			menus_list = map(lambda menu: {'name': menu.name, 'key': menu.key(), 'navbar_first_set':menu.navbar_first_set, 'navbar_second_set':menu.navbar_second_set}, menus)
+			menus_list = map(lambda menu: {'name': menu.name, 'key': menu.key(), 'navbar_first_set':menu.navbar_first_set, 'navbar_second_set':menu.navbar_second_set, 'navbar_third_set':menu.navbar_third_set, 'navbar_fourth_set':menu.navbar_fourth_set}, menus)
 			commun_menus = Menu.all().filter("shared =", True).order("name").fetch(200)
 			commun_menus.extend(Menu.all().filter("author =", None).filter("shared =", False).order("name").fetch(200))
 			commun_menus_list = map(lambda menu: {'name': menu.name, 'key': menu.key(),'shared': menu.shared, 'navbar_first_set':menu.navbar_first_set, 'navbar_second_set':menu.navbar_second_set}, commun_menus)
@@ -55,7 +55,7 @@ class NavbarPage(webapp.RequestHandler):
 				navbar.name = self.request.get('name')
 				navbar.code = self.request.get('code')
 			# Formulaire pour les options
-			elif self.request.get('first_menu') and self.request.get('second_menu'):
+			elif self.request.get('first_menu') and self.request.get('second_menu') and self.request.get('third_menu') and self.request.get('fourth_menu'):
 				if self.request.get('first_menu') == "None":
 					navbar.first_menu = None
 				else:
@@ -65,6 +65,16 @@ class NavbarPage(webapp.RequestHandler):
 					navbar.second_menu = None
 				else:
 					navbar.second_menu = Menu.get(self.request.get('second_menu'))
+					
+				if self.request.get('third_menu') == "None":
+					navbar.third_menu = None
+				else:
+					navbar.third_menu = Menu.get(self.request.get('third_menu'))
+				
+				if self.request.get('fourth_menu') == "None":
+					navbar.fourth_menu = None
+				else:
+					navbar.fourth_menu = Menu.get(self.request.get('fourth_menu'))
 				
 				if self.request.get('cse_unique_id') == "this_site":
 					navbar.cse_unique_id = None

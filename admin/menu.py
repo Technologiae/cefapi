@@ -26,6 +26,8 @@ class MenuPage(webapp.RequestHandler):
 				'links': links,
 				'navbar_first_set': menu.navbar_first_set,
 				'navbar_second_set': menu.navbar_second_set,
+				'navbar_third_set': menu.navbar_third_set,
+				'navbar_fourth_set': menu.navbar_fourth_set,
 				'menu': menu,
 				'user': user,
 			}
@@ -111,6 +113,16 @@ class MenusPage(webapp.RequestHandler):
 				navbar = Navbar.get(self.request.get('navbar_second_key'))
 				navbar.second_menu = menu
 				navbar.put()
-	
+			
+			if self.request.get('navbar_third_key'):
+				navbar = Navbar.get(self.request.get('navbar_third_key'))
+				navbar.third_menu = menu
+				navbar.put()
+			
+			if self.request.get('navbar_fourth_key'):
+				navbar = Navbar.get(self.request.get('navbar_fourth_key'))
+				navbar.fourth_menu = menu
+				navbar.put()
+			
 			memcache.flush_all()
 			self.redirect("/admin/menus/%s" % menu_key)
