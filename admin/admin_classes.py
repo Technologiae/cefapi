@@ -17,7 +17,7 @@ class GdataFeed():
 		# automatically try to associate the token with the current user then store
 		# it in the datastore.
 		gdata.alt.appengine.run_on_appengine(client, store_tokens=False, single_user_mode=True)
-		client.email = 'eglise.catholique.france@gmail.com'
+		client.email = CSE_EMAIL
 		client.password = CSE_PASSWORD
 		# To request a ClientLogin token you must specify the desired service using
 		# its service name ("cprose" pour GOOGLE CUSTOM SEARCH)
